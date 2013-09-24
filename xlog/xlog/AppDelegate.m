@@ -18,7 +18,8 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    
+    [xlogger shared];
+    [@"haha" xlog];
     
     return YES;
 }

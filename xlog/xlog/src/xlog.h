@@ -1,4 +1,7 @@
 
+#import "xlogger.h"
+#import "xlog_ext.h"
+
 //* Base Format Logging *//
 static inline void _XLogF(char* file, unsigned int line, NSString* msg)
 {

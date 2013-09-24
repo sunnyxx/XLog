@@ -21,6 +21,7 @@
 		A3583C8017F0886E00682082 /* xlogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A3583C7F17F0886E00682082 /* xlogTests.m */; };
 		A3583C8C17F089DB00682082 /* xlogger.m in Sources */ = {isa = PBXBuildFile; fileRef = A3583C8B17F089DB00682082 /* xlogger.m */; };
 		A3583C8E17F08DEC00682082 /* xlogger_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3583C8D17F08DEC00682082 /* xlogger_config.plist */; };
+		A4F2E6B317F16C5400D90635 /* xlog_ext.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F2E6B217F16C5400D90635 /* xlog_ext.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,8 @@
 		A3583C8A17F089DB00682082 /* xlogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xlogger.h; sourceTree = "<group>"; };
 		A3583C8B17F089DB00682082 /* xlogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = xlogger.m; sourceTree = "<group>"; };
 		A3583C8D17F08DEC00682082 /* xlogger_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = xlogger_config.plist; sourceTree = "<group>"; };
+		A4F2E6B117F16C5400D90635 /* xlog_ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xlog_ext.h; sourceTree = "<group>"; };
+		A4F2E6B217F16C5400D90635 /* xlog_ext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = xlog_ext.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +160,8 @@
 				A3583C8917F0892E00682082 /* xlog.h */,
 				A3583C8A17F089DB00682082 /* xlogger.h */,
 				A3583C8B17F089DB00682082 /* xlogger.m */,
+				A4F2E6B117F16C5400D90635 /* xlog_ext.h */,
+				A4F2E6B217F16C5400D90635 /* xlog_ext.m */,
 				A3583C8D17F08DEC00682082 /* xlogger_config.plist */,
 			);
 			path = src;
@@ -263,6 +268,7 @@
 				A3583C6B17F0886E00682082 /* AppDelegate.m in Sources */,
 				A3583C6717F0886E00682082 /* main.m in Sources */,
 				A3583C8C17F089DB00682082 /* xlogger.m in Sources */,
+				A4F2E6B317F16C5400D90635 /* xlog_ext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,6 +531,7 @@
 				A3583C8317F0886E00682082 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A3583C8417F0886E00682082 /* Build configuration list for PBXNativeTarget "xlogTests" */ = {
 			isa = XCConfigurationList;
@@ -533,6 +540,7 @@
 				A3583C8617F0886E00682082 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
