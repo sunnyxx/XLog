@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>settings</key>
+	<dict>
+		<key>owner</key>
+		<true/>
+		<key>time</key>
+		<true/>
+		<key>function</key>
+		<false/>
+		<key>file</key>
+		<true/>
+		<key>thread</key>
+		<true/>
+	</dict>
+	<key>show</key>
+	<dict>
+		<key>ALL</key>
+		<false/>
+		<key>sy</key>
+		<true/>
+		<key>cs</key>
+		<false/>
+		<key>wyq</key>
+		<false/>
+		<key>zzy</key>
+		<false/>
+		<key>zh</key>
+		<false/>
+		<key>tsc</key>
+		<false/>
+		<key>lw</key>
+		<false/>
+		<key>phm</key>
+		<false/>
+		<key>wl</key>
+		<false/>
+	</dict>
+</dict>
+</plist>

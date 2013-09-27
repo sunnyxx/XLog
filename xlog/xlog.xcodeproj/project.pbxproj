@@ -19,9 +19,8 @@
 		A3583C7617F0886E00682082 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3583C5E17F0886E00682082 /* UIKit.framework */; };
 		A3583C7E17F0886E00682082 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A3583C7C17F0886E00682082 /* InfoPlist.strings */; };
 		A3583C8017F0886E00682082 /* xlogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A3583C7F17F0886E00682082 /* xlogTests.m */; };
-		A3583C8C17F089DB00682082 /* xlogger.m in Sources */ = {isa = PBXBuildFile; fileRef = A3583C8B17F089DB00682082 /* xlogger.m */; };
-		A3583C8E17F08DEC00682082 /* xlogger_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3583C8D17F08DEC00682082 /* xlogger_config.plist */; };
-		A4F2E6B317F16C5400D90635 /* xlog_ext.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F2E6B217F16C5400D90635 /* xlog_ext.m */; };
+		A3583C8E17F08DEC00682082 /* xlogconfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3583C8D17F08DEC00682082 /* xlogconfig.plist */; };
+		A45721F017F564200094BD7C /* xlog.m in Sources */ = {isa = PBXBuildFile; fileRef = A45721EF17F564200094BD7C /* xlog.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,11 +51,8 @@
 		A3583C7D17F0886E00682082 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A3583C7F17F0886E00682082 /* xlogTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = xlogTests.m; sourceTree = "<group>"; };
 		A3583C8917F0892E00682082 /* xlog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xlog.h; sourceTree = "<group>"; };
-		A3583C8A17F089DB00682082 /* xlogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xlogger.h; sourceTree = "<group>"; };
-		A3583C8B17F089DB00682082 /* xlogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = xlogger.m; sourceTree = "<group>"; };
-		A3583C8D17F08DEC00682082 /* xlogger_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = xlogger_config.plist; sourceTree = "<group>"; };
-		A4F2E6B117F16C5400D90635 /* xlog_ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xlog_ext.h; sourceTree = "<group>"; };
-		A4F2E6B217F16C5400D90635 /* xlog_ext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = xlog_ext.m; sourceTree = "<group>"; };
+		A3583C8D17F08DEC00682082 /* xlogconfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = xlogconfig.plist; sourceTree = "<group>"; };
+		A45721EF17F564200094BD7C /* xlog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = xlog.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,11 +154,8 @@
 			isa = PBXGroup;
 			children = (
 				A3583C8917F0892E00682082 /* xlog.h */,
-				A3583C8A17F089DB00682082 /* xlogger.h */,
-				A3583C8B17F089DB00682082 /* xlogger.m */,
-				A4F2E6B117F16C5400D90635 /* xlog_ext.h */,
-				A4F2E6B217F16C5400D90635 /* xlog_ext.m */,
-				A3583C8D17F08DEC00682082 /* xlogger_config.plist */,
+				A45721EF17F564200094BD7C /* xlog.m */,
+				A3583C8D17F08DEC00682082 /* xlogconfig.plist */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -244,7 +237,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3583C8E17F08DEC00682082 /* xlogger_config.plist in Resources */,
+				A3583C8E17F08DEC00682082 /* xlogconfig.plist in Resources */,
 				A3583C6517F0886E00682082 /* InfoPlist.strings in Resources */,
 				A3583C6D17F0886E00682082 /* Images.xcassets in Resources */,
 			);
@@ -267,8 +260,7 @@
 			files = (
 				A3583C6B17F0886E00682082 /* AppDelegate.m in Sources */,
 				A3583C6717F0886E00682082 /* main.m in Sources */,
-				A3583C8C17F089DB00682082 /* xlogger.m in Sources */,
-				A4F2E6B317F16C5400D90635 /* xlog_ext.m in Sources */,
+				A45721F017F564200094BD7C /* xlog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
