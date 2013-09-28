@@ -1,18 +1,22 @@
 
-//* Base Format Logging *//
-static inline void _XLogF(char* file, unsigned int line, NSString* msg)
-{
-    NSString* fileName = [[[NSString stringWithFormat:@"%s", file] pathComponents] lastObject];
-    NSString* output = [NSString stringWithFormat:@"! XLog [%@:%d] %@",fileName,line,msg];
-    printf("%s\n", [output UTF8String]);
-}
-#define XLogF(FORMAT, ...) _XLogF(__FILE__,__LINE__,[NSString stringWithFormat:FORMAT, ##__VA_ARGS__])
+// internal
+void _XLogInternal(NSString* owner, const char* file, const char* func, unsigned int line, NSString* format, ...);
+#define _XLogSettingPlistName @"xlogconfig.plist"
 
-//* Useful Extensions *//
-#define XLogObj(obj) XLogF(@"%@", (obj))
-#define XLogError(error) XLogF(@"NSError:[%d] %@",error.code, error.localizedDescription)
+// convertor
+#ifdef DEBUG
+#define XLog(owner, format...) _XLogInternal(owner,__FILE__,__PRETTY_FUNCTION__,__LINE__,format)
+#else
+#define XLog(owner, format...) do{}while(0)
+#endif
 
-#define XLogInt(value) XLogF(@"%d", (value))
-#define XLogFloat(value) XLogF(@"%f", (value))
-#define XLogRect(rect) XLogF(@"CGRect:%@", NSStringFromCGRect((rect)))
-#define XLogPoint(point) XLogF(@"CGPoint:%@", NSStringFromCGPoint((point)))
+// usage
+#define SYLog(format...)    XLog(@"sy", format)
+#define CSLog(format...)    XLog(@"cs", format)
+#define WYQLog(format...)   XLog(@"wyq", format)
+#define ZZYLog(format...)   XLog(@"zzy", format)
+#define ZHLog(format...)    XLog(@"zh", format)
+#define TSCLog(format...)   XLog(@"tsc", format)
+#define LWLog(format...)    XLog(@"lw", format)
+#define PHMLog(format...)   XLog(@"phm", format)
+#define WLLog(format...)    XLog(@"wl", format)
