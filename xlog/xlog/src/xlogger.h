@@ -1,14 +1,11 @@
 
 
-#define sy(statements) \
-[xlogger setOwner:@"123"];\
-statements
-\
+#import <Foundation/Foundation.h>
 
 @interface xlogger : NSObject
 
-+ (void)setOwner:(NSString *)owner;
-+ (void)log:(NSString *)message;
++ (instancetype)shared;
 
+- (void)log:(NSString *)message;
 
 @end

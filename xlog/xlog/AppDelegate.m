@@ -19,7 +19,6 @@
     [self.window makeKeyAndVisible];
     
     
-    sy(xlog(sy, 123));
     
     return YES;
 }
