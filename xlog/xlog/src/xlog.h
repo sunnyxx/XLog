@@ -1,10 +1,15 @@
 
 // internal
-void _XLogInternal(NSString* owner, const char* file, const char* func, unsigned int line, NSString* format, ...);
+void _XLogInternal(NSString* owner,
+                   const char* file,
+                   const char* func,
+                   unsigned int line,
+                   NSString* format, ...);
+
 #define _XLogSettingPlistName @"xlogconfig.plist"
 
-// convertor
 #ifdef DEBUG
+// convert from define to function
 #define XLog(owner, format...) _XLogInternal(owner,__FILE__,__PRETTY_FUNCTION__,__LINE__,format)
 #else
 #define XLog(owner, format...) do{}while(0)
@@ -20,3 +25,10 @@ void _XLogInternal(NSString* owner, const char* file, const char* func, unsigned
 #define LWLog(format...)    XLog(@"lw", format)
 #define PHMLog(format...)   XLog(@"phm", format)
 #define WLLog(format...)    XLog(@"wl", format)
+
+// convenients
+NSString* XRect(CGRect rect);
+NSString* XPoint(CGPoint point);
+NSString* XSize(CGSize size);
+
+NSString* XError(NSError* error);

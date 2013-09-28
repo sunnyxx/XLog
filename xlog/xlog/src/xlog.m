@@ -14,10 +14,25 @@ static NSString* const XLogKeyThread = @"thread";
 
 static NSString* const XLogKeyAll = @"ALL";
 
-@interface <#class name#> : <#superclass#>
+// 记录程序开始时间，以后显示的时间均为与开始时间的间隔
+static CFAbsoluteTime startTime = 0;
 
+@interface XLogInternal : NSObject
++ (NSDictionary *)configDict;
++ (BOOL)shouldShowLogWithOwner:(NSString *)owner;
++ (BOOL)shouldShowAllLogs;
++ (BOOL)shouldShowItem:(NSString *)item;
 @end
-NSDictionary* getConfigDict()
+
+
+@implementation XLogInternal
+
++ (void)load
+{
+    startTime = CFAbsoluteTimeGetCurrent();
+}
+
++ (NSDictionary *)configDict
 {
     static NSDictionary* dict = nil;
     if (!dict)
@@ -32,29 +47,31 @@ NSDictionary* getConfigDict()
     return dict;
 }
 
-BOOL shouldShowLogWithOwner(NSString* owner)
++ (BOOL)shouldShowAllLogs
 {
-    NSDictionary* showDict = getConfigDict()[XLogPlistKeyShowOwner];
-    return [showDict[owner] boolValue];
-}
-
-BOOL shouldShowAllLogs()
-{
-    NSDictionary* showDict = getConfigDict()[XLogPlistKeyShowOwner];
+    NSDictionary* showDict = [self configDict][XLogPlistKeyShowOwner];
     return [showDict[XLogKeyAll] boolValue];
 }
 
-BOOL shouldShowItem(NSString* item)
++ (BOOL)shouldShowLogWithOwner:(NSString *)owner
 {
-    NSDictionary* settingDict = getConfigDict()[XLogPlistKeySettings];
+    NSDictionary* showDict = [self configDict][XLogPlistKeyShowOwner];
+    return [showDict[owner] boolValue];
+}
+
++ (BOOL)shouldShowItem:(NSString *)item
+{
+    NSDictionary* settingDict = [self configDict][XLogPlistKeySettings];
     return [settingDict[item] boolValue];
 }
+
+@end
 
 
 void _XLogInternal(NSString* owner, const char* file, const char* func, unsigned int line, NSString* format, ...)
 {
     // 根据plist选择要输出谁的log
-    if (!shouldShowLogWithOwner(owner) && !shouldShowAllLogs())
+    if (![XLogInternal shouldShowLogWithOwner:owner] && ![XLogInternal shouldShowAllLogs])
     {
         return;
     }
@@ -73,34 +90,33 @@ void _XLogInternal(NSString* owner, const char* file, const char* func, unsigned
     // 根据plist设置输出的项
     NSMutableString* output = [NSMutableString stringWithFormat:@"XLOG"];
     
-    if (shouldShowItem(XLogKeyOwner))
+    if ([XLogInternal shouldShowItem:XLogKeyOwner])
     {
         [output appendFormat:@"(%@):",owner];
     }
-    if (shouldShowItem(XLogKeyTime))
+    if ([XLogInternal shouldShowItem:XLogKeyTime])
     {
         CFAbsoluteTime time = CFAbsoluteTimeGetCurrent();
-        
-        [output appendFormat:@"[%lf]", time];
+        [output appendFormat:@"[dt=%lf]", time - startTime];
     }
-    if (shouldShowItem(XLogKeyThread))
+    if ([XLogInternal shouldShowItem:XLogKeyThread])
     {
         NSString* threadName = [NSThread isMainThread] ? @"main-thread" : [[NSThread currentThread] name];
         [output appendFormat:@"[%@]", threadName];
     }
-    if (shouldShowItem(XLogKeyFile))
+    if ([XLogInternal shouldShowItem:XLogKeyFile])
     {
         NSString* fileName = [[[NSString stringWithFormat:@"%s", file] pathComponents] lastObject];
         [output appendFormat:@"[%@:%u]", fileName, line];
     }
-    if (shouldShowItem(XLogKeyFunction))
+    if ([XLogInternal shouldShowItem:XLogKeyFunction])
     {
         [output appendFormat:@"%s", func];
     }
     
     [output appendFormat:@" %@", message];
     
-    fprintf(stderr, "%s\n", [output UTF8String]);
+    fprintf(stderr, "%s", [output UTF8String]);
     
 #if !__has_feature(objc_arc)
     [message release];
@@ -108,24 +124,21 @@ void _XLogInternal(NSString* owner, const char* file, const char* func, unsigned
 
 }
 
-//
-////* Base Format Logging *//
-//static inline void _XLogF(char* file, unsigned int line, NSString* msg)
-//{
-//    NSString* fileName = [[[NSString stringWithFormat:@"%s", file] pathComponents] lastObject];
-//    NSString* output = [NSString stringWithFormat:@"! XLog [%@:%d] %@",fileName,line,msg];
-//    printf("%s\n", [output UTF8String]);
-//}
-//#define XLogF(FORMAT, ...) _XLogF(__FILE__,__LINE__,[NSString stringWithFormat:FORMAT, ##__VA_ARGS__])
-//
-////* Useful Extensions *//
-//#define XLogObj(obj) XLogF(@"%@", (obj))
-//#define XLogError(error) XLogF(@"NSError:[%d] %@",error.code, error.localizedDescription)
-//
-//#define XLogInt(value) XLogF(@"%d", (value))
-//#define XLogFloat(value) XLogF(@"%f", (value))
-//#define XLogRect(rect) XLogF(@"CGRect:%@", NSStringFromCGRect((rect)))
-//#define XLogPoint(point) XLogF(@"CGPoint:%@", NSStringFromCGPoint((point)))
-//
-//
+// convenients
 
+NSString* XRect(CGRect rect)
+{
+    return NSStringFromCGRect(rect);
+}
+NSString* XPoint(CGPoint point)
+{
+    return NSStringFromCGPoint(point);
+}
+NSString* XSize(CGSize size)
+{
+    return NSStringFromCGSize(size);
+}
+NSString* XError(NSError* error)
+{
+    return [error localizedDescription];
+}

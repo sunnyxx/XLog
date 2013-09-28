@@ -18,9 +18,11 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    XLog(@"yuan.sun", @"%@,%@", @"123", @"123123");
+    XLog(@"sy", @"%@,%@", @"123", @"123123");
     SYLog(@"%@,%d", @"223332323", 1);
-
+    CGRect rect = CGRectMake(0, 0, 100, 200);
+    SYLog(@"rect:%@", XRect(rect));
+    
     return YES;
 }
 

@@ -7,13 +7,13 @@
 		<key>owner</key>
 		<true/>
 		<key>time</key>
-		<true/>
+		<false/>
 		<key>function</key>
 		<false/>
 		<key>file</key>
 		<true/>
 		<key>thread</key>
-		<true/>
+		<false/>
 	</dict>
 	<key>show</key>
 	<dict>
