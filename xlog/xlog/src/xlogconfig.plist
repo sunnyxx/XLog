@@ -6,7 +6,7 @@
 	<dict>
 		<key>owner</key>
 		<true/>
-		<key>time</key>
+		<key>timestamp</key>
 		<false/>
 		<key>function</key>
 		<false/>
@@ -18,7 +18,7 @@
 	<key>show</key>
 	<dict>
 		<key>ALL</key>
-		<false/>
+		<true/>
 		<key>sy</key>
 		<true/>
 		<key>cs</key>

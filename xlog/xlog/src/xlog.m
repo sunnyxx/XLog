@@ -1,13 +1,11 @@
 
 #import "xlog.h"
 
-// 一级key
 static NSString* const XLogPlistKeySettings = @"settings";
 static NSString* const XLogPlistKeyShowOwner = @"show";
 
-// 二级key
 static NSString* const XLogKeyOwner = @"owner";
-static NSString* const XLogKeyTime = @"time";
+static NSString* const XLogKeyTime = @"timestamp";
 static NSString* const XLogKeyFile = @"file";
 static NSString* const XLogKeyFunction = @"function";
 static NSString* const XLogKeyThread = @"thread";
@@ -19,11 +17,12 @@ static CFAbsoluteTime startTime = 0;
 
 @interface XLogInternal : NSObject
 + (NSDictionary *)configDict;
-+ (BOOL)shouldShowLogWithOwner:(NSString *)owner;
++ (BOOL)shouldShowLogOfOwner:(NSString *)owner;
 + (BOOL)shouldShowAllLogs;
 + (BOOL)shouldShowItem:(NSString *)item;
-@end
 
++ (void)logWithOwner:(NSString *)owner file:(NSString *)file function:(NSString *)function line:(NSUInteger)line message:(NSString *)message;
+@end
 
 @implementation XLogInternal
 
@@ -37,11 +36,11 @@ static CFAbsoluteTime startTime = 0;
     static NSDictionary* dict = nil;
     if (!dict)
     {
-        NSString* path = [[NSBundle mainBundle] pathForResource:_XLogSettingPlistName ofType:nil];
+        NSString* path = [[NSBundle mainBundle] pathForResource:_XLogSettingPlist ofType:nil];
         dict = [NSDictionary dictionaryWithContentsOfFile:path];
         if (!dict)
         {
-            NSLog(@"xlog.m - config file:%@ not found", _XLogSettingPlistName);
+            NSLog(@"xlog.m - config file:%@ not found", _XLogSettingPlist);
         }
     }
     return dict;
@@ -53,7 +52,7 @@ static CFAbsoluteTime startTime = 0;
     return [showDict[XLogKeyAll] boolValue];
 }
 
-+ (BOOL)shouldShowLogWithOwner:(NSString *)owner
++ (BOOL)shouldShowLogOfOwner:(NSString *)owner
 {
     NSDictionary* showDict = [self configDict][XLogPlistKeyShowOwner];
     return [showDict[owner] boolValue];
@@ -65,27 +64,13 @@ static CFAbsoluteTime startTime = 0;
     return [settingDict[item] boolValue];
 }
 
-@end
-
-
-void _XLogInternal(NSString* owner, const char* file, const char* func, unsigned int line, NSString* format, ...)
++ (void)logWithOwner:(NSString *)owner file:(NSString *)file function:(NSString *)function line:(NSUInteger)line message:(NSString *)message
 {
     // 根据plist选择要输出谁的log
-    if (![XLogInternal shouldShowLogWithOwner:owner] && ![XLogInternal shouldShowAllLogs])
+    if (![XLogInternal shouldShowLogOfOwner:owner] && ![XLogInternal shouldShowAllLogs])
     {
         return;
     }
-    
-    // 根据va list生成message
-    va_list ap;
-	
-    va_start (ap, format);
-    if (![format hasSuffix: @"\n"])
-    {
-        format = [format stringByAppendingString: @"\n"];
-	}
-	NSString* message =  [[NSString alloc] initWithFormat:format arguments:ap];
-	va_end (ap);
     
     // 根据plist设置输出的项
     NSMutableString* output = [NSMutableString stringWithFormat:@"XLOG"];
@@ -106,22 +91,38 @@ void _XLogInternal(NSString* owner, const char* file, const char* func, unsigned
     }
     if ([XLogInternal shouldShowItem:XLogKeyFile])
     {
-        NSString* fileName = [[[NSString stringWithFormat:@"%s", file] pathComponents] lastObject];
+        NSString* fileName = [[[NSString stringWithFormat:@"%@", file] pathComponents] lastObject];
         [output appendFormat:@"[%@:%u]", fileName, line];
     }
     if ([XLogInternal shouldShowItem:XLogKeyFunction])
     {
-        [output appendFormat:@"%s", func];
+        [output appendFormat:@"%@", function];
     }
     
-    [output appendFormat:@" %@", message];
+    [output appendFormat:@" %@\n", message];
     
     fprintf(stderr, "%s", [output UTF8String]);
-    
-#if !__has_feature(objc_arc)
-    [message release];
-#endif
+}
 
+@end
+
+void _XLogInternal(NSString* owner, const char* file, const char* func, unsigned int line, NSString* format, ...)
+{
+    va_list ap;
+    va_start (ap, format);
+	NSString* message =  [[NSString alloc] initWithFormat:format arguments:ap];
+    va_end (ap);
+
+#if !__has_feature(objc_arc)
+    [message autorelease];
+#endif
+    
+    // do log
+    [XLogInternal logWithOwner:owner
+                          file:[NSString stringWithUTF8String:file]
+                      function:[NSString stringWithUTF8String:func]
+                          line:line
+                       message:message];
 }
 
 // convenients

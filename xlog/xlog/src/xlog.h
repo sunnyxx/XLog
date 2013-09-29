@@ -6,7 +6,7 @@ void _XLogInternal(NSString* owner,
                    unsigned int line,
                    NSString* format, ...);
 
-#define _XLogSettingPlistName @"xlogconfig.plist"
+#define _XLogSettingPlist @"xlogconfig.plist"
 
 #ifdef DEBUG
 // convert from define to function
@@ -30,5 +30,5 @@ void _XLogInternal(NSString* owner,
 NSString* XRect(CGRect rect);
 NSString* XPoint(CGPoint point);
 NSString* XSize(CGSize size);
-
 NSString* XError(NSError* error);
+

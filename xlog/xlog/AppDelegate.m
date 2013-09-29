@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "xlog.h"
 
 @implementation AppDelegate
 
@@ -18,10 +17,14 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    XLog(@"sy", @"%@,%@", @"123", @"123123");
+    XLog(@"ALL", @"%@,%@", @"123", @"123123");
     SYLog(@"%@,%d", @"223332323", 1);
     CGRect rect = CGRectMake(0, 0, 100, 200);
     SYLog(@"rect:%@", XRect(rect));
+    ZHLog(@"zhou hua");
+    ZZYLog(@"zzy");
+    TSCLog(@"321123123123,%@", XRect(self.window.frame));
+    
     
     return YES;
 }
