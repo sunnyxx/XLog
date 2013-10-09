@@ -17,15 +17,14 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    XLog(@"ALL", @"%@,%@", @"123", @"123123");
-    SYLog(@"%@,%d", @"223332323", 1);
-    CGRect rect = CGRectMake(0, 0, 100, 200);
-    SYLog(@"rect:%@", XRect(rect));
-    ZHLog(@"zhou hua");
-    ZZYLog(@"zzy");
-    TSCLog(@"321123123123,%@", XRect(self.window.frame));
+    SYLog(@"logging"@"!!!");
+    SYWarning(@"warning!!");
+    SYError(@"error!!!!");
     
-    
+    CSLog(@"logging!!!");
+    CSWarning(@"warning!!");
+    CSError(@"error!!!!");
+
     return YES;
 }
 

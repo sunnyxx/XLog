@@ -10,6 +10,10 @@ static NSString* const XLogKeyFile = @"file";
 static NSString* const XLogKeyFunction = @"function";
 static NSString* const XLogKeyThread = @"thread";
 
+static NSString* const XLogKeyLog = @"xlogTitle";
+static NSString* const XLogKeyWarn = @"xwarningTitle";
+static NSString* const XLogKeyError = @"xerrorTitle";
+
 static NSString* const XLogKeyAll = @"ALL";
 
 // 记录程序开始时间，以后显示的时间均为与开始时间的间隔
@@ -17,11 +21,15 @@ static CFAbsoluteTime startTime = 0;
 
 @interface XLogInternal : NSObject
 + (NSDictionary *)configDict;
-+ (BOOL)shouldShowLogOfOwner:(NSString *)owner;
-+ (BOOL)shouldShowAllLogs;
++ (BOOL)shouldShowLogOfOwner:(NSString *)owner level:(XLogLevelBits)bit;
 + (BOOL)shouldShowItem:(NSString *)item;
-
-+ (void)logWithOwner:(NSString *)owner file:(NSString *)file function:(NSString *)function line:(NSUInteger)line message:(NSString *)message;
++ (NSString *)stringForItem:(NSString *)item;
++ (void)logWithOwner:(NSString *)owner
+               level:(NSUInteger)level
+                file:(NSString *)file
+            function:(NSString *)function
+                line:(NSUInteger)line
+             message:(NSString *)message;
 @end
 
 @implementation XLogInternal
@@ -46,16 +54,12 @@ static CFAbsoluteTime startTime = 0;
     return dict;
 }
 
-+ (BOOL)shouldShowAllLogs
++ (BOOL)shouldShowLogOfOwner:(NSString *)owner level:(XLogLevelBits)bit
 {
     NSDictionary* showDict = [self configDict][XLogPlistKeyShowOwner];
-    return [showDict[XLogKeyAll] boolValue];
-}
-
-+ (BOOL)shouldShowLogOfOwner:(NSString *)owner
-{
-    NSDictionary* showDict = [self configDict][XLogPlistKeyShowOwner];
-    return [showDict[owner] boolValue];
+    NSUInteger showBits = [showDict[owner] unsignedIntegerValue];
+    NSUInteger allBits = [showDict[XLogKeyAll] unsignedIntegerValue];
+    return (showBits & bit) || (allBits & bit);
 }
 
 + (BOOL)shouldShowItem:(NSString *)item
@@ -64,16 +68,27 @@ static CFAbsoluteTime startTime = 0;
     return [settingDict[item] boolValue];
 }
 
-+ (void)logWithOwner:(NSString *)owner file:(NSString *)file function:(NSString *)function line:(NSUInteger)line message:(NSString *)message
++ (NSString *)stringForItem:(NSString *)item
+{
+    NSDictionary* settingDict = [self configDict][XLogPlistKeySettings];
+    return settingDict[item];
+}
+
++ (void)logWithOwner:(NSString *)owner level:(NSUInteger)bit file:(NSString *)file function:(NSString *)function line:(NSUInteger)line message:(NSString *)message
 {
     // 根据plist选择要输出谁的log
-    if (![XLogInternal shouldShowLogOfOwner:owner] && ![XLogInternal shouldShowAllLogs])
+    if (![XLogInternal shouldShowLogOfOwner:owner level:bit])
     {
         return;
     }
     
     // 根据plist设置输出的项
-    NSMutableString* output = [NSMutableString stringWithFormat:@"XLOG"];
+    NSString* levelString = nil;
+    if (bit & XLogLevel) levelString = [self stringForItem:XLogKeyLog];
+    else if (bit & XWarnLevel) levelString = [self stringForItem:XLogKeyWarn];
+    else if (bit & XErrorLevel) levelString = [self stringForItem:XLogKeyError];
+    
+    NSMutableString* output = [NSMutableString stringWithString:levelString];
     
     if ([XLogInternal shouldShowItem:XLogKeyOwner])
     {
@@ -106,7 +121,11 @@ static CFAbsoluteTime startTime = 0;
 
 @end
 
-void _XLogInternal(NSString* owner, const char* file, const char* func, unsigned int line, NSString* format, ...)
+//-------------
+// entrance
+//-------------
+
+void _XLogInternal(NSString* owner, NSUInteger level, const char* file, const char* func, unsigned int line, NSString* format, ...)
 {
     va_list ap;
     va_start (ap, format);
@@ -119,27 +138,10 @@ void _XLogInternal(NSString* owner, const char* file, const char* func, unsigned
     
     // do log
     [XLogInternal logWithOwner:owner
+                         level:level
                           file:[NSString stringWithUTF8String:file]
                       function:[NSString stringWithUTF8String:func]
                           line:line
                        message:message];
 }
 
-// convenients
-
-NSString* XRect(CGRect rect)
-{
-    return NSStringFromCGRect(rect);
-}
-NSString* XPoint(CGPoint point)
-{
-    return NSStringFromCGPoint(point);
-}
-NSString* XSize(CGSize size)
-{
-    return NSStringFromCGSize(size);
-}
-NSString* XError(NSError* error)
-{
-    return [error localizedDescription];
-}

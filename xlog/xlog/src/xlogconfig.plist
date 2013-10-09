@@ -14,29 +14,39 @@
 		<true/>
 		<key>thread</key>
 		<false/>
+		<key>xlogTitle</key>
+		<string>LOG</string>
+		<key>xwarningTitle</key>
+		<string>WARNING</string>
+		<key>xerrorTitle</key>
+		<string>ERROR</string>
 	</dict>
 	<key>show</key>
 	<dict>
+		<key>说明:bits</key>
+		<string>0(off)1(info)2(warning)4(error)</string>
+		<key>说明:bits&amp;</key>
+		<string>info+warning+error=1+2+4=7</string>
 		<key>ALL</key>
-		<true/>
+		<integer>4</integer>
 		<key>sy</key>
-		<true/>
+		<integer>7</integer>
 		<key>cs</key>
-		<false/>
+		<integer>0</integer>
 		<key>wyq</key>
-		<false/>
+		<integer>0</integer>
 		<key>zzy</key>
-		<false/>
+		<integer>0</integer>
 		<key>zh</key>
-		<false/>
+		<integer>0</integer>
 		<key>tsc</key>
-		<false/>
+		<integer>0</integer>
 		<key>lw</key>
-		<false/>
+		<integer>0</integer>
 		<key>phm</key>
-		<false/>
+		<integer>0</integer>
 		<key>wl</key>
-		<false/>
+		<integer>0</integer>
 	</dict>
 </dict>
 </plist>
