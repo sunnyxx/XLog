@@ -17,13 +17,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    SYLog(@"logging"@"!!!");
-    SYWarning(@"warning!!");
-    SYError(@"error!!!!");
-    
-    CSLog(@"logging!!!");
-    CSWarning(@"warning!!");
-    CSError(@"error!!!!");
+    SYLog(@"123:$rect,456:$rect...");
 
     return YES;
 }
