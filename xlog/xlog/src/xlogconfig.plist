@@ -17,17 +17,21 @@
 		<key>xlogTitle</key>
 		<string>LOG</string>
 		<key>xwarningTitle</key>
-		<string>WARNING</string>
+		<string>&lt;WARNING&gt;</string>
 		<key>xerrorTitle</key>
-		<string>ERROR</string>
+		<string>*&lt;ERROR&gt;*</string>
 	</dict>
 	<key>show</key>
 	<dict>
-		<key>说明:bits</key>
+		<key>---说明:bits</key>
 		<string>0(off)1(info)2(warning)4(error)</string>
-		<key>说明:bits&amp;</key>
+		<key>---说明:bits&amp;</key>
 		<string>info+warning+error=1+2+4=7</string>
 		<key>ALL</key>
+		<integer>0</integer>
+		<key>Database</key>
+		<integer>4</integer>
+		<key>Network</key>
 		<integer>4</integer>
 		<key>sy</key>
 		<integer>7</integer>

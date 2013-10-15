@@ -19,8 +19,8 @@
 		A3583C7617F0886E00682082 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3583C5E17F0886E00682082 /* UIKit.framework */; };
 		A3583C7E17F0886E00682082 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A3583C7C17F0886E00682082 /* InfoPlist.strings */; };
 		A3583C8017F0886E00682082 /* xlogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A3583C7F17F0886E00682082 /* xlogTests.m */; };
-		A3583C8E17F08DEC00682082 /* xlogconfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3583C8D17F08DEC00682082 /* xlogconfig.plist */; };
 		A45721F017F564200094BD7C /* xlog.m in Sources */ = {isa = PBXBuildFile; fileRef = A45721EF17F564200094BD7C /* xlog.m */; };
+		A49FA807180792EF00622E4F /* xlogconfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = A49FA806180792EF00622E4F /* xlogconfig.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,8 +51,8 @@
 		A3583C7D17F0886E00682082 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A3583C7F17F0886E00682082 /* xlogTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = xlogTests.m; sourceTree = "<group>"; };
 		A3583C8917F0892E00682082 /* xlog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xlog.h; sourceTree = "<group>"; };
-		A3583C8D17F08DEC00682082 /* xlogconfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = xlogconfig.plist; sourceTree = "<group>"; };
 		A45721EF17F564200094BD7C /* xlog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = xlog.m; sourceTree = "<group>"; };
+		A49FA806180792EF00622E4F /* xlogconfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = xlogconfig.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,9 +153,9 @@
 		A3583C8817F088E800682082 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				A49FA806180792EF00622E4F /* xlogconfig.plist */,
 				A3583C8917F0892E00682082 /* xlog.h */,
 				A45721EF17F564200094BD7C /* xlog.m */,
-				A3583C8D17F08DEC00682082 /* xlogconfig.plist */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -237,8 +237,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3583C8E17F08DEC00682082 /* xlogconfig.plist in Resources */,
 				A3583C6517F0886E00682082 /* InfoPlist.strings in Resources */,
+				A49FA807180792EF00622E4F /* xlogconfig.plist in Resources */,
 				A3583C6D17F0886E00682082 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

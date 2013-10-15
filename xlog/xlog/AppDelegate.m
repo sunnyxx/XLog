@@ -17,6 +17,14 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
+    SYLog(@"logging%@!!!", @[@"1",@"2"]);
+    SYLog(@"logging"@"!!!");
+    SYLog(@"logging"@"!!!");
+    SYLog(@"logging"@"!!!");
+    SYLog(@"logging"@"!!!");
+    SYLog(@"logging"@"!!!");
+    SYLog(@"logging"@"!!!");
+    SYLog(@"logging"@"!!!");
     SYLog(@"logging"@"!!!");
     SYWarning(@"warning!!");
     SYError(@"error!!!!");
@@ -24,7 +32,15 @@
     CSLog(@"logging!!!");
     CSWarning(@"warning!!");
     CSError(@"error!!!!");
+    
+    DBLog(@"db log");
+    DBWarning(@"db warning");
+    DBError(@"db error");
 
+    NetworkLog(@"Network log");
+    NetworkWarning(@"Network warning");
+    NetworkError(@"Network error");
+    
     return YES;
 }
 

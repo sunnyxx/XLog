@@ -55,6 +55,13 @@ typedef NS_OPTIONS(NSUInteger, XLogLevelBits)
 #define PHMError(format...)   XLog(@"phm",XErrorLevel, format)
 #define WLError(format...)    XLog(@"wl", XErrorLevel, format)
 
+// modules
+#define DBLog(format...)        XLog(@"Database", XLogLevel, format)
+#define DBWarning(format...)    XLog(@"Database", XWarnLevel, format)
+#define DBError(format...)      XLog(@"Database", XErrorLevel, format)
+#define NetworkLog(format...)        XLog(@"Network", XLogLevel, format)
+#define NetworkWarning(format...)    XLog(@"Network", XWarnLevel, format)
+#define NetworkError(format...)      XLog(@"Network", XErrorLevel, format)
 
 // convenients
 static inline NSString* XRect(CGRect rect) {return NSStringFromCGRect(rect);}
