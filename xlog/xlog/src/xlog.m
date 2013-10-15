@@ -127,11 +127,31 @@ static CFAbsoluteTime startTime = 0;
 
 void _XLogInternal(NSString* owner, NSUInteger level, const char* file, const char* func, unsigned int line, NSString* format, ...)
 {
-    va_list ap;
+    va_list ap, cp;
     va_start (ap, format);
-	NSString* message =  [[NSString alloc] initWithFormat:format arguments:ap];
-    va_end (ap);
+    va_copy(cp, ap);
+	NSString* message =  [[NSString alloc] initWithFormat:format arguments:cp];
+    
+    NSRange searchRange = NSMakeRange(0, message.length);
+    NSRange resultRange = NSMakeRange(NSNotFound, 0);
+    do
+    {
+        NSRange resultRange = [format rangeOfString:@"$rect" options:NSCaseInsensitiveSearch range:searchRange];
+        if (resultRange.length > 0)
+        {
+            searchRange.location = NSMaxRange(resultRange);
+            searchRange.length = message.length - searchRange.location;
+            NSLog(@"%@", NSStringFromRange(resultRange));
 
+        }
+    }
+    while (resultRange.location != NSNotFound);
+
+    NSArray* compoents = [format componentsSeparatedByString:@"$rect"];
+//    [format stringByReplacingOccurrencesOfString:nil withString:nil];
+
+    va_end (ap);
+    
 #if !__has_feature(objc_arc)
     [message autorelease];
 #endif
