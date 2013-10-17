@@ -1,5 +1,5 @@
 
-#import "xlog.h"
+#import "XLog.h"
 
 static NSString* const XLogPlistKeySettings = @"settings";
 static NSString* const XLogPlistKeyShowOwner = @"show";
@@ -24,12 +24,7 @@ static CFAbsoluteTime startTime = 0;
 + (BOOL)shouldShowLogOfOwner:(NSString *)owner level:(XLogLevel)bit;
 + (BOOL)shouldShowItem:(NSString *)item;
 + (NSString *)stringForItem:(NSString *)item;
-+ (void)logWithOwner:(NSString *)owner
-               level:(NSUInteger)level
-                file:(NSString *)file
-            function:(NSString *)function
-                line:(NSUInteger)line
-             message:(NSString *)message;
+
 @end
 
 @implementation XLogInternal
@@ -121,59 +116,69 @@ static CFAbsoluteTime startTime = 0;
 
 @end
 
+
+
+
+// --------------------new
+@interface XLogger ()
++ (void)logWithOwner:(NSString *)owner
+               level:(NSUInteger)level
+                file:(NSString *)file
+            function:(NSString *)function
+                line:(NSUInteger)line
+              format:(NSString *)format, ...;
+
+@end
+
+@implementation XLogger
+
++ (void)logWithOwner:(NSString *)owner level:(NSUInteger)level file:(NSString *)file function:(NSString *)function line:(NSUInteger)line format:(NSString *)format, ...
+{
+    
+}
+@end
+
+
 //-------------
 // entrance
 //-------------
 
 void _XLog(NSString* owner, NSUInteger level, const char* file, const char* func, unsigned int line, NSString* format, ...)
 {
-    va_list ap, cp;
-    va_start (ap, format);
-    va_copy(cp, ap);
-	NSString* message =  [[NSString alloc] initWithFormat:format arguments:cp];
-    
-    NSRange searchRange = NSMakeRange(0, message.length);
-    NSRange resultRange = NSMakeRange(NSNotFound, 0);
-    do
-    {
-        NSRange resultRange = [format rangeOfString:@"$rect" options:NSCaseInsensitiveSearch range:searchRange];
-        if (resultRange.length > 0)
-        {
-            searchRange.location = NSMaxRange(resultRange);
-            searchRange.length = message.length - searchRange.location;
-            NSLog(@"%@", NSStringFromRange(resultRange));
-
-        }
-    }
-    while (resultRange.location != NSNotFound);
-
-    NSArray* compoents = [format componentsSeparatedByString:@"$rect"];
-//    [format stringByReplacingOccurrencesOfString:nil withString:nil];
-
-    va_end (ap);
-    
-#if !__has_feature(objc_arc)
-    [message autorelease];
-#endif
-    
-    // do log
-    [XLogInternal logWithOwner:owner
-                         level:level
-                          file:[NSString stringWithUTF8String:file]
-                      function:[NSString stringWithUTF8String:func]
-                          line:line
-                       message:message];
+    //    va_list ap, cp;
+    //    va_start (ap, format);
+    //    va_copy(cp, ap);
+    //	NSString* message =  [[NSString alloc] initWithFormat:format arguments:cp];
+    //
+    //    NSRange searchRange = NSMakeRange(0, message.length);
+    //    NSRange resultRange = NSMakeRange(NSNotFound, 0);
+    //    do
+    //    {
+    //        NSRange resultRange = [format rangeOfString:@"$rect" options:NSCaseInsensitiveSearch range:searchRange];
+    //        if (resultRange.length > 0)
+    //        {
+    //            searchRange.location = NSMaxRange(resultRange);
+    //            searchRange.length = message.length - searchRange.location;
+    //            NSLog(@"%@", NSStringFromRange(resultRange));
+    //
+    //        }
+    //    }
+    //    while (resultRange.location != NSNotFound);
+    //
+    //    NSArray* compoents = [format componentsSeparatedByString:@"$rect"];
+    ////    [format stringByReplacingOccurrencesOfString:nil withString:nil];
+    //
+    //    va_end (ap);
+    //
+    //#if !__has_feature(objc_arc)
+    //    [message autorelease];
+    //#endif
+    //
+    // forward
+    [XLogger logWithOwner:owner
+                    level:level
+                     file:[NSString stringWithUTF8String:file]
+                 function:[NSString stringWithUTF8String:func]
+                     line:line
+                   format:format];
 }
-
-
-// --------------------new
-
-@implementation XLogger
-//
-//+ (void)logWithOwner:(NSString *)owner level:(XLogLevel)level macros:(XLogPredefines)macros format:(NSString *)format, ...
-//{
-//    NSLog(@"%s,%s,%d", macros.file, macros.func, macros.line);
-//
-//}
-
-@end

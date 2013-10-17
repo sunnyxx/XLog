@@ -19,7 +19,6 @@
 //    XLogPredefines macros = XLogGetPredefines;
 //    XXLog(@"123 %d");
 //    [XLogger logWithOwner:@"xx" level:XLogInfoLevel macros:(XLogPredefines){"s","b",1} format:@"123:%d", 123];
-    XXLog(@"1");
     return YES;
 }
 
