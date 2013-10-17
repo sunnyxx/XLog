@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -16,31 +15,11 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    
-    SYLog(@"logging%@!!!", @[@"1",@"2"]);
-    SYLog(@"logging"@"!!!");
-    SYLog(@"logging"@"!!!");
-    SYLog(@"logging"@"!!!");
-    SYLog(@"logging"@"!!!");
-    SYLog(@"logging"@"!!!");
-    SYLog(@"logging"@"!!!");
-    SYLog(@"logging"@"!!!");
-    SYLog(@"logging"@"!!!");
-    SYWarning(@"warning!!");
-    SYError(@"error!!!!");
-    
-    CSLog(@"logging!!!");
-    CSWarning(@"warning!!");
-    CSError(@"error!!!!");
-    
-    DBLog(@"db log");
-    DBWarning(@"db warning");
-    DBError(@"db error");
 
-    NetworkLog(@"Network log");
-    NetworkWarning(@"Network warning");
-    NetworkError(@"Network error");
-    
+//    XLogPredefines macros = XLogGetPredefines;
+//    XXLog(@"123 %d");
+//    [XLogger logWithOwner:@"xx" level:XLogInfoLevel macros:(XLogPredefines){"s","b",1} format:@"123:%d", 123];
+    XXLog(@"1");
     return YES;
 }
 

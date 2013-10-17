@@ -21,7 +21,7 @@ static CFAbsoluteTime startTime = 0;
 
 @interface XLogInternal : NSObject
 + (NSDictionary *)configDict;
-+ (BOOL)shouldShowLogOfOwner:(NSString *)owner level:(XLogLevelBits)bit;
++ (BOOL)shouldShowLogOfOwner:(NSString *)owner level:(XLogLevel)bit;
 + (BOOL)shouldShowItem:(NSString *)item;
 + (NSString *)stringForItem:(NSString *)item;
 + (void)logWithOwner:(NSString *)owner
@@ -54,7 +54,7 @@ static CFAbsoluteTime startTime = 0;
     return dict;
 }
 
-+ (BOOL)shouldShowLogOfOwner:(NSString *)owner level:(XLogLevelBits)bit
++ (BOOL)shouldShowLogOfOwner:(NSString *)owner level:(XLogLevel)bit
 {
     NSDictionary* showDict = [self configDict][XLogPlistKeyShowOwner];
     NSUInteger showBits = [showDict[owner] unsignedIntegerValue];
@@ -84,9 +84,9 @@ static CFAbsoluteTime startTime = 0;
     
     // 根据plist设置输出的项
     NSString* levelString = nil;
-    if (bit & XLogLevel) levelString = [self stringForItem:XLogKeyLog];
-    else if (bit & XWarnLevel) levelString = [self stringForItem:XLogKeyWarn];
-    else if (bit & XErrorLevel) levelString = [self stringForItem:XLogKeyError];
+    if (bit & XLogInfoLevel) levelString = [self stringForItem:XLogKeyLog];
+    else if (bit & XLogWarningLevel) levelString = [self stringForItem:XLogKeyWarn];
+    else if (bit & XLogErrorLevel) levelString = [self stringForItem:XLogKeyError];
     
     NSMutableString* output = [NSMutableString stringWithString:levelString];
     
@@ -125,7 +125,7 @@ static CFAbsoluteTime startTime = 0;
 // entrance
 //-------------
 
-void _XLogInternal(NSString* owner, NSUInteger level, const char* file, const char* func, unsigned int line, NSString* format, ...)
+void _XLog(NSString* owner, NSUInteger level, const char* file, const char* func, unsigned int line, NSString* format, ...)
 {
     va_list ap, cp;
     va_start (ap, format);
@@ -165,3 +165,15 @@ void _XLogInternal(NSString* owner, NSUInteger level, const char* file, const ch
                        message:message];
 }
 
+
+// --------------------new
+
+@implementation XLogger
+//
+//+ (void)logWithOwner:(NSString *)owner level:(XLogLevel)level macros:(XLogPredefines)macros format:(NSString *)format, ...
+//{
+//    NSLog(@"%s,%s,%d", macros.file, macros.func, macros.line);
+//
+//}
+
+@end
