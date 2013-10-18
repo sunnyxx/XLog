@@ -2,32 +2,32 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>settings</key>
+	<key>Setting</key>
 	<dict>
-		<key>owner</key>
+		<key>XLoggerComponentKeyOwner</key>
 		<true/>
-		<key>timestamp</key>
-		<false/>
-		<key>function</key>
-		<false/>
-		<key>file</key>
+		<key>XLoggerComponentKeyTime</key>
 		<true/>
-		<key>thread</key>
+		<key>XLoggerComponentKeyFunction</key>
 		<false/>
-		<key>xlogTitle</key>
+		<key>XLoggerComponentKeyFile</key>
+		<true/>
+		<key>XLoggerComponentKeyThread</key>
+		<false/>
+		<key>InfoTitle</key>
 		<string>LOG</string>
-		<key>xwarningTitle</key>
+		<key>WarningTitle</key>
 		<string>&lt;WARNING&gt;</string>
-		<key>xerrorTitle</key>
+		<key>ErrorTitle</key>
 		<string>*&lt;ERROR&gt;*</string>
 	</dict>
-	<key>show</key>
+	<key>Owner</key>
 	<dict>
 		<key>---说明:bits</key>
 		<string>0(off)1(info)2(warning)4(error)</string>
 		<key>---说明:bits&amp;</key>
 		<string>info+warning+error=1+2+4=7</string>
-		<key>ALL</key>
+		<key>XLoggerOwnerKeyAll</key>
 		<integer>0</integer>
 		<key>Database</key>
 		<integer>4</integer>

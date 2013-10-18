@@ -19,8 +19,9 @@
 		A3583C7617F0886E00682082 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3583C5E17F0886E00682082 /* UIKit.framework */; };
 		A3583C7E17F0886E00682082 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A3583C7C17F0886E00682082 /* InfoPlist.strings */; };
 		A3583C8017F0886E00682082 /* xlogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A3583C7F17F0886E00682082 /* xlogTests.m */; };
-		A45721F017F564200094BD7C /* XLog.m in Sources */ = {isa = PBXBuildFile; fileRef = A45721EF17F564200094BD7C /* XLog.m */; };
-		A49FA807180792EF00622E4F /* xlogconfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = A49FA806180792EF00622E4F /* xlogconfig.plist */; };
+		A42652DC1810DD8D003CA2B7 /* XLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = A42652DB1810DD8D003CA2B7 /* XLogger.m */; };
+		A42652DF1810ED3D003CA2B7 /* SNSLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = A42652DE1810ED3D003CA2B7 /* SNSLogging.m */; };
+		A49FA807180792EF00622E4F /* SNSLogging.plist in Resources */ = {isa = PBXBuildFile; fileRef = A49FA806180792EF00622E4F /* SNSLogging.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,8 +53,11 @@
 		A3583C7F17F0886E00682082 /* xlogTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = xlogTests.m; sourceTree = "<group>"; };
 		A3583C8917F0892E00682082 /* XLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLog.h; sourceTree = "<group>"; };
 		A3FE7B5F1810127B00143196 /* SNSLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SNSLogging.h; sourceTree = "<group>"; };
-		A45721EF17F564200094BD7C /* XLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLog.m; sourceTree = "<group>"; };
-		A49FA806180792EF00622E4F /* xlogconfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = xlogconfig.plist; sourceTree = "<group>"; };
+		A42652DA1810DD8D003CA2B7 /* XLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XLogger.h; path = xlog/XLogger.h; sourceTree = SOURCE_ROOT; };
+		A42652DB1810DD8D003CA2B7 /* XLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XLogger.m; path = xlog/XLogger.m; sourceTree = SOURCE_ROOT; };
+		A42652DD1810DE7E003CA2B7 /* XLoggerConfigurable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLoggerConfigurable.h; sourceTree = "<group>"; };
+		A42652DE1810ED3D003CA2B7 /* SNSLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNSLogging.m; sourceTree = "<group>"; };
+		A49FA806180792EF00622E4F /* SNSLogging.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SNSLogging.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,10 +158,13 @@
 		A3583C8817F088E800682082 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				A49FA806180792EF00622E4F /* xlogconfig.plist */,
 				A3583C8917F0892E00682082 /* XLog.h */,
-				A45721EF17F564200094BD7C /* XLog.m */,
+				A42652DA1810DD8D003CA2B7 /* XLogger.h */,
+				A42652DB1810DD8D003CA2B7 /* XLogger.m */,
+				A42652DD1810DE7E003CA2B7 /* XLoggerConfigurable.h */,
 				A3FE7B5F1810127B00143196 /* SNSLogging.h */,
+				A42652DE1810ED3D003CA2B7 /* SNSLogging.m */,
+				A49FA806180792EF00622E4F /* SNSLogging.plist */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -240,7 +247,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3583C6517F0886E00682082 /* InfoPlist.strings in Resources */,
-				A49FA807180792EF00622E4F /* xlogconfig.plist in Resources */,
+				A49FA807180792EF00622E4F /* SNSLogging.plist in Resources */,
 				A3583C6D17F0886E00682082 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -260,9 +267,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A42652DC1810DD8D003CA2B7 /* XLogger.m in Sources */,
 				A3583C6B17F0886E00682082 /* AppDelegate.m in Sources */,
 				A3583C6717F0886E00682082 /* main.m in Sources */,
-				A45721F017F564200094BD7C /* XLog.m in Sources */,
+				A42652DF1810ED3D003CA2B7 /* SNSLogging.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
