@@ -1,9 +1,9 @@
 //
 //  main.m
-//  xlog
+//  XLogDemo
 //
-//  Created by sunny on 13-9-23.
-//
+//  Created by sunny on 13-10-18.
+//  Copyright (c) 2013年 sunnyxx. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
