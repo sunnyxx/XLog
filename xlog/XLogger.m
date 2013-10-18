@@ -49,7 +49,7 @@ static CFAbsoluteTime startTimeStamp = 0.0;
     return singleton;
 }
 
-- (void)logWithOwner:(NSString *)owner level:(NSUInteger)level file:(NSString *)file function:(NSString *)function line:(NSUInteger)line format:(NSString *)format, ...
+- (void)logWithOwner:(NSString *)owner level:(XLogLevel)level file:(NSString *)file function:(NSString *)function line:(NSUInteger)line format:(NSString *)format, ...
 {
     // Ask delegate should show this log or not
     if (owner && [self.delegate respondsToSelector:@selector(XLogger:shouldShowOwner:level:)])
@@ -59,7 +59,6 @@ static CFAbsoluteTime startTimeStamp = 0.0;
             return;
         }
     }
-    
     va_list ap;
     va_start(ap, format); {
         

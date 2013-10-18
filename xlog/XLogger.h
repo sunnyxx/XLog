@@ -31,16 +31,32 @@
 #import "XLoggerConfigurable.h"
 
 @interface XLogger : NSObject
-
+/**
+ * Get a default logger
+ * @return Singleton of XLogger
+ */
 + (instancetype)defaultLogger;
 
+/**
+ * This is where format and arguments parsed, assembled and printed.
+ *
+ * @param owner: A owner name of whom calls this log.
+ * @param level: A bit mask stands for this log's level.
+ * @param file: File path of where this log is called.
+ * @param function: Function name of where this log is called.
+ * @param line: Line number of where this log is called.
+ * @param format...: Format string and arg list
+ */
 - (void)logWithOwner:(NSString *)owner
-               level:(NSUInteger)level
+               level:(XLogLevel)level
                 file:(NSString *)file
             function:(NSString *)function
                 line:(NSUInteger)line
               format:(NSString *)format, ...;
 
+/**
+ * Delegate for configuring.
+ */
 @property (nonatomic, weak) id<XLoggerDelegate> delegate;
 
 @end

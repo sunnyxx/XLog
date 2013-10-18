@@ -30,20 +30,20 @@
 
 #import "XLogger.h"
 
-static void inline _XLog (NSString* owner,NSUInteger level,const char* file,const char* func,unsigned int line,NSString* format, ...)
-{
-    [XLogger defaultLogger];
-}
-
-
-// debuging switch
+// Basic Log Macro
 #ifdef DEBUG
-#define XLogBase(owner, level, format...) _XLog(owner, level, __FILE__,__PRETTY_FUNCTION__,__LINE__,format)
+    #define XLogBase(_owner, _level, _format, ...) \
+        [[XLogger defaultLogger] logWithOwner:(_owner) \
+                                        level:(_level) \
+                                         file:[NSString stringWithUTF8String:__FILE__] \
+                                     function:[NSString stringWithUTF8String:__PRETTY_FUNCTION__] \
+                                         line:__LINE__ \
+                                       format:(_format), ##__VA_ARGS__];
 #else
-#define XLogBase(owner, format...) do{}while(0)
+    #define XLogBase(owner, format...) do{}while(0)
 #endif
 
-// basic anoymous
+// Anonymous Log
 #define XLog(format...)     XLogBase(nil, XInfoLevel, format)
 #define XWarning(format...) XLogBase(nil, XWarningLevel, format)
 #define XError(format...)   XLogBase(nil, XErrorLevel, format)

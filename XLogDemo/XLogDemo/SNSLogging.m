@@ -8,10 +8,6 @@
 
 #import "SNSLogging.h"
 
-@interface SNSLoggingDelegate ()
-
-@end
-
 @implementation SNSLoggingDelegate
 
 static SNSLoggingDelegate* singleton = nil;
