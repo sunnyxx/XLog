@@ -38,16 +38,20 @@ typedef NS_OPTIONS(NSUInteger, XLogLevel)
 };
 
 typedef NSString* (^XFormatHandler)(void* argumennt);
+@protocol XLoggerFormatter <NSObject>
+@required
++ (NSString *)format;
++ (NSString *)formattedStringFromArgumentList:(va_list *)ap;
+@end
 
 @class XLogger;
 @protocol XLoggerDelegate <NSObject>
 @optional
-- (BOOL)XLogger:(XLogger *)logger shouldShowOwner:(NSString *)owner level:(XLogLevel)level;
-- (BOOL)XLogger:(XLogger *)logger shouldShowComponent:(NSString *)key;
-- (NSString *)XLogger:(XLogger *)logger titleForLevel:(XLogLevel)level;
++ (BOOL)XLogger:(XLogger *)logger shouldShowOwner:(NSString *)owner level:(XLogLevel)level;
++ (BOOL)XLogger:(XLogger *)logger shouldShowComponent:(NSString *)key;
++ (NSString *)XLogger:(XLogger *)logger titleForLevel:(XLogLevel)level;
 
 @end
-
 
 static NSString* const XLoggerComponentKeyOwner = @"XLoggerComponentKeyOwner";
 static NSString* const XLoggerComponentKeyTime = @"XLoggerComponentKeyTime";

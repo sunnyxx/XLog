@@ -29,6 +29,16 @@
 //
 
 #import "XLogger.h"
+#import "XLoggerBuildInFormatters.h"
+
+@interface XLogger ()
+- (NSString *)prefixStringWithOwner:(NSString *)owner level:(XLogLevel)level file:(NSString *)file func:(NSString *)func line:(NSUInteger)line;
+
+// Formatter support
+@property (nonatomic, strong) NSMutableArray* formatterClasses;
+- (BOOL)containsCustomizedFormat:(NSString *)format;
+- (NSString *)customizedFormat:(NSString *)format arguments:(va_list)ap;
+@end
 
 static CFAbsoluteTime startTimeStamp = 0.0;
 
@@ -44,7 +54,15 @@ static CFAbsoluteTime startTimeStamp = 0.0;
     static dispatch_once_t onceToken;
     static XLogger* singleton = nil;
     dispatch_once(&onceToken, ^{
+        
         singleton = [self new];
+        
+        // Build-in formatters
+        [singleton registerFormatterClass:[XLoggerCGPointFormatter class]];
+        [singleton registerFormatterClass:[XLoggerCGSizeFormatter class]];
+        [singleton registerFormatterClass:[XLoggerCGRectFormatter class]];
+        [singleton registerFormatterClass:[XLoggerSelectorFormatter class]];
+        
     });
     return singleton;
 }
@@ -52,119 +70,213 @@ static CFAbsoluteTime startTimeStamp = 0.0;
 - (void)logWithOwner:(NSString *)owner level:(XLogLevel)level file:(NSString *)file function:(NSString *)function line:(NSUInteger)line format:(NSString *)format, ...
 {
     // Ask delegate should show this log or not
-    if (owner && [self.delegate respondsToSelector:@selector(XLogger:shouldShowOwner:level:)])
+    if (owner && [(NSObject *)self.delegate respondsToSelector:@selector(XLogger:shouldShowOwner:level:)])
     {
         if (![self.delegate XLogger:self shouldShowOwner:owner level:level])
         {
             return;
         }
     }
-    va_list ap;
-    va_start(ap, format); {
+    
+    NSMutableString* output = [NSMutableString string];
+    {
+        NSString* prefix = [self prefixStringWithOwner:owner level:level file:file func:function line:line];
         
-        // Transfer delegate to block, with default setting
-        BOOL (^shouldShowComponent)(NSString *) = ^(NSString* key){
-            if ([self.delegate respondsToSelector:@selector(XLogger:shouldShowComponent:)])
-            {
-                return [self.delegate XLogger:self shouldShowComponent:key];
-            }
-            else
-            {
-                // Default add owner and filename(line number)
-                return (BOOL)([key isEqualToString:XLoggerComponentKeyOwner] || [key isEqualToString:XLoggerComponentKeyFile]);
-            }
-            return NO;
-        };
-        
-        // Combine components
-        NSMutableString* output = [NSMutableString string];
-        
-        // add title
-        NSString* title = @"XLOG"; // default
-        if ([self.delegate respondsToSelector:@selector(XLogger:titleForLevel:)])
-        {
-            title = [self.delegate XLogger:self titleForLevel:level] ?: title;
+        NSString* message = [NSString string]; {
+            va_list ap;
+            va_start(ap, format);
+            message = [self customizedFormat:format arguments:ap];
+            va_end(ap);
         }
-        [output appendString:title];
         
-        // append owner or nil if should
-        if (owner && shouldShowComponent(XLoggerComponentKeyOwner))
+        // assemble
+        [output appendString:prefix];
+        [output appendString:@" "];
+        [output appendString:message];
+    }
+    
+    // Handle line end
+    if (![output hasSuffix:@"\n"])
+    {
+        [output appendString:@"\n"];
+    }
+    
+    // Final print
+    fprintf(stderr, "%s", [output UTF8String]);
+
+}
+
+- (void)registerFormatterClass:(Class<XLoggerFormatter>)formatterClass
+{
+    if (!self.formatterClasses)
+    {
+        self.formatterClasses = [NSMutableArray array];
+    }
+    [self.formatterClasses addObject:formatterClass];
+}
+
+#pragma mark - Private
+
+- (NSString *)prefixStringWithOwner:(NSString *)owner level:(XLogLevel)level file:(NSString *)file func:(NSString *)function line:(NSUInteger)line
+{
+    // Transfer delegate to block, with default setting
+    BOOL (^shouldShowComponent)(NSString *) = ^(NSString* key){
+        if ([(NSObject *)self.delegate respondsToSelector:@selector(XLogger:shouldShowComponent:)])
         {
-            [output appendFormat:@"(%@):",owner];
+            return [self.delegate XLogger:self shouldShowComponent:key];
         }
         else
         {
-            [output appendFormat:@":"];
+            // Default add owner and filename(line number)
+            return (BOOL)([key isEqualToString:XLoggerComponentKeyOwner] || [key isEqualToString:XLoggerComponentKeyFile]);
         }
-        
-        // append delta time from begining if needed
-        if (shouldShowComponent(XLoggerComponentKeyTime))
-        {
-            CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
-            [output appendFormat:@"[dt=%lf]", now - startTimeStamp];
-        }
-        
-        // append thread message if needed
-        if (shouldShowComponent(XLoggerComponentKeyThread))
-        {
-            NSString* threadName = [NSThread isMainThread] ? @"main-thread" : [[NSThread currentThread] name];
-            [output appendFormat:@"[%@]", threadName];
-        }
-        
-        // append
-        if (file && shouldShowComponent(XLoggerComponentKeyFile))
-        {
-            NSString* fileName = [[[NSString stringWithFormat:@"%@", file] pathComponents] lastObject];
-            [output appendFormat:@"[%@:%u]", fileName, line];
-        }
-        if (function && shouldShowComponent(XLoggerComponentKeyFunction))
-        {
-            [output appendFormat:@"%@", function];
-        }
-        
-        // message
-        NSString* message = [[NSString alloc] initWithFormat:format arguments:ap];
-        [output appendFormat:@" %@", message];
-        
-        if (![output hasSuffix:@"\n"])
-        {
-            [output appendString:@"\n"];
-        }
-        
-        // final print
-        fprintf(stderr, "%s", [output UTF8String]);
-        
-    } va_end(ap);
+        return NO;
+    };
     
-        //    va_list ap, cp;
-        //    va_start (ap, format);
-        //    va_copy(cp, ap);
-        //	NSString* message =  [[NSString alloc] initWithFormat:format arguments:cp];
-        //
-        //    NSRange searchRange = NSMakeRange(0, message.length);
-        //    NSRange resultRange = NSMakeRange(NSNotFound, 0);
-        //    do
-        //    {
-        //        NSRange resultRange = [format rangeOfString:@"$rect" options:NSCaseInsensitiveSearch range:searchRange];
-        //        if (resultRange.length > 0)
-        //        {
-        //            searchRange.location = NSMaxRange(resultRange);
-        //            searchRange.length = message.length - searchRange.location;
-        //            NSLog(@"%@", NSStringFromRange(resultRange));
-        //
-        //        }
-        //    }
-        //    while (resultRange.location != NSNotFound);
-        //
-        //    NSArray* compoents = [format componentsSeparatedByString:@"$rect"];
-        ////    [format stringByReplacingOccurrencesOfString:nil withString:nil];
-        //
-        //    va_end (ap);
-        //
-        //#if !__has_feature(objc_arc)
-        //    [message autorelease];
-        //#endif
-        //
-
+    // Combine components
+    NSMutableString* prefix = [NSMutableString string];
+    
+    // add title
+    NSString* title = @"XLOG"; // default
+    if ([(NSObject *)self.delegate respondsToSelector:@selector(XLogger:titleForLevel:)])
+    {
+        title = [self.delegate XLogger:self titleForLevel:level] ?: title;
+    }
+    [prefix appendString:title];
+    
+    // append owner or nil if should
+    if (owner && shouldShowComponent(XLoggerComponentKeyOwner))
+    {
+        [prefix appendFormat:@"(%@):",owner];
+    }
+    else
+    {
+        [prefix appendFormat:@":"];
+    }
+    
+    // append delta time from begining if needed
+    if (shouldShowComponent(XLoggerComponentKeyTime))
+    {
+        CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
+        [prefix appendFormat:@"[dt=%lf]", now - startTimeStamp];
+    }
+    
+    // append thread message if needed
+    if (shouldShowComponent(XLoggerComponentKeyThread))
+    {
+        NSString* threadName = [NSThread isMainThread] ? @"main-thread" : [[NSThread currentThread] name];
+        [prefix appendFormat:@"[%@]", threadName];
+    }
+    
+    // append
+    if (file && shouldShowComponent(XLoggerComponentKeyFile))
+    {
+        NSString* fileName = [[[NSString stringWithFormat:@"%@", file] pathComponents] lastObject];
+        [prefix appendFormat:@"[%@:%u]", fileName, line];
+    }
+    if (function && shouldShowComponent(XLoggerComponentKeyFunction))
+    {
+        [prefix appendFormat:@"%@", function];
+    }
+    
+    return prefix;
 }
+
+- (BOOL)containsCustomizedFormat:(NSString *)format
+{
+    for (Class<XLoggerFormatter> formatterClass in self.formatterClasses)
+    {
+        NSString* specFormat = [formatterClass format];
+        if ([format rangeOfString:specFormat].location != NSNotFound)
+        {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (void)moveArgumentListWithFormat:(NSString *)format arguments:(va_list *)ap
+{
+    // standard printf format parsing
+    NSArray* components = [format componentsSeparatedByString:@"%"];
+    for (int index = 1; index < components.count; index++)
+    {
+        NSString* component = components[index];
+        NSRange range = [component rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]];
+        NSString* sub = [component substringWithRange:range];
+        
+        char type = [sub characterAtIndex:0];
+        switch (type)
+        {
+            case 'c':case 'C':
+            case 'd':case 'i':case 'x':case 'o':case 'u':
+                va_arg(*ap, int); // Promoted
+                break;
+            case 'l':case 'f':
+                va_arg(*ap, double);  // Promoted
+                break;
+            case 's':
+                va_arg(*ap, const char *);
+            case '@':
+                va_arg(*ap, id);
+                break;
+            case 'p':
+                va_arg(*ap, void *);
+            default:
+                break;
+        }
+    }
+}
+
+- (NSString *)customizedFormat:(NSString *)format arguments:(va_list)ap
+{
+    NSMutableString* result = [NSMutableString string];
+    
+    // Exit recursive search if format doesn't contain a customized format.
+    if (![self containsCustomizedFormat:format])
+    {
+        return [[NSString alloc] initWithFormat:format arguments:ap];
+    }
+    
+    // Find the first format and its formatter class in formatters
+    NSRange firstCustomizedFormatRange = NSMakeRange(NSNotFound, 0);
+    Class<XLoggerFormatter> firstFormatterClass = Nil;
+    
+    for (Class<XLoggerFormatter> aClass in self.formatterClasses)
+    {
+        NSString* specFormat = [aClass format];
+        NSRange specRange = [format rangeOfString:specFormat];
+        if (specRange.location <= firstCustomizedFormatRange.location)
+        {
+            firstCustomizedFormatRange = specRange;
+            firstFormatterClass = aClass;
+        }
+    }
+    
+    // Generate from the standard format and arguments IN FRONT
+    NSRange subRangeFront = NSMakeRange(0, firstCustomizedFormatRange.location);
+    NSString* subFormatFront = [format substringWithRange:subRangeFront];
+    NSString* subStringFront = [[NSString alloc] initWithFormat:subFormatFront arguments:ap];
+    [result appendString:subStringFront];
+    
+    // * Important * Move the argument list to current
+    [self moveArgumentListWithFormat:subFormatFront arguments:&ap];
+
+    
+    // Generate with the specific formatter class IN SEARCHED OUT RANGE
+    NSString* formattedString = [firstFormatterClass formattedStringFromArgumentList:&ap];
+    [result appendString:formattedString];
+    
+    // Recursive end string
+    NSRange subRangeEnd = NSMakeRange(NSMaxRange(firstCustomizedFormatRange), format.length - NSMaxRange(firstCustomizedFormatRange));
+    NSString* subFormatEnd = [format substringWithRange:subRangeEnd];
+
+    if (subRangeEnd.length > 0)
+    {
+        [result appendString:[self customizedFormat:subFormatEnd arguments:ap]];
+    }
+    
+    return result;
+}
+
 @end

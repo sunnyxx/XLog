@@ -45,7 +45,7 @@
  * @param file: File path of where this log is called.
  * @param function: Function name of where this log is called.
  * @param line: Line number of where this log is called.
- * @param format...: Format string and arg list
+ * @param format,...: Format string and arg list
  */
 - (void)logWithOwner:(NSString *)owner
                level:(XLogLevel)level
@@ -56,7 +56,16 @@
 
 /**
  * Delegate for configuring.
+ * @discussion As in general, logger's configuration will not be changed runtime, 
+ *             so use a static class delegate will do.
  */
-@property (nonatomic, weak) id<XLoggerDelegate> delegate;
+@property (nonatomic, weak) Class<XLoggerDelegate> delegate;
+
+/**
+ * Register a formatter class that confirm <XLoggerFormatter> protocol to logger.
+ *
+ * @discussion As logger's delegate, use a class.
+ */
+- (void)registerFormatterClass:(Class<XLoggerFormatter>)formatterClass;
 
 @end

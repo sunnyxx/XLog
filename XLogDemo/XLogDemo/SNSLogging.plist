@@ -7,7 +7,7 @@
 		<key>XLoggerComponentKeyOwner</key>
 		<true/>
 		<key>XLoggerComponentKeyTime</key>
-		<true/>
+		<false/>
 		<key>XLoggerComponentKeyFunction</key>
 		<false/>
 		<key>XLoggerComponentKeyFile</key>

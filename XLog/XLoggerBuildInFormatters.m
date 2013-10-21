@@ -1,5 +1,12 @@
 //
-//  XLog.h
+//  XLoggerBuildInFormatters.m
+//  XLogDemo
+//
+//  Created by sunny on 13-10-19.
+//  Copyright (c) 2013年 sunnyxx. All rights reserved.
+//
+//
+//  XLoggerBuildInFormatters.m
 //  XLog
 //
 //  Created by Sunny Sun on 18/10/13.
@@ -28,24 +35,49 @@
 //  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+#import "XLoggerBuildInFormatters.h"
 #import "XLogger.h"
 
-// Basic macro
-#ifdef DEBUG
-    #define XLogBase(_owner, _level, _format, ...) \
-        [[XLogger defaultLogger] logWithOwner:(_owner) \
-                                        level:(_level) \
-                                         file:[NSString stringWithUTF8String:__FILE__] \
-                                     function:[NSString stringWithUTF8String:__PRETTY_FUNCTION__] \
-                                         line:__LINE__ \
-                                       format:(_format), ##__VA_ARGS__];
-#else
-    #define XLogBase(owner, format...) do{}while(0)
-#endif
+//----------
+// CGPoint
+//----------
+@implementation XLoggerCGPointFormatter
++ (NSString *)format { return @"%P"; }
++ (NSString *)formattedStringFromArgumentList:(va_list *)ap
+{
+    return NSStringFromCGPoint(va_arg(*ap, CGPoint));
+}
+@end
 
-// Anonymous build-in log
-#define XLog(format...)     XLogBase(nil, XInfoLevel, format)
-#define XWarning(format...) XLogBase(nil, XWarningLevel, format)
-#define XError(format...)   XLogBase(nil, XErrorLevel, format)
+//----------
+// CGSize
+//----------
+@implementation XLoggerCGSizeFormatter
++ (NSString *)format { return @"%S"; }
++ (NSString *)formattedStringFromArgumentList:(va_list *)ap
+{
+    return NSStringFromCGSize(va_arg(*ap, CGSize));
+}
+@end
 
+//----------
+// CGRect
+//----------
+@implementation XLoggerCGRectFormatter
++ (NSString *)format { return @"%R"; }
++ (NSString *)formattedStringFromArgumentList:(va_list *)ap
+{
+    return NSStringFromCGRect(va_arg(*ap, CGRect));
+}
+@end
 
+//----------
+// Selector
+//----------
+@implementation XLoggerSelectorFormatter
++ (NSString *)format { return @"%SEL"; }
++ (NSString *)formattedStringFromArgumentList:(va_list *)ap
+{
+    return NSStringFromSelector(va_arg(*ap, SEL));
+}
+@end

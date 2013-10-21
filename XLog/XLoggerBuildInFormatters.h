@@ -1,5 +1,5 @@
 //
-//  XLog.h
+//  XLoggerBuildInFormatters.h
 //  XLog
 //
 //  Created by Sunny Sun on 18/10/13.
@@ -28,24 +28,22 @@
 //  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "XLogger.h"
+#import "XLoggerConfigurable.h"
 
-// Basic macro
-#ifdef DEBUG
-    #define XLogBase(_owner, _level, _format, ...) \
-        [[XLogger defaultLogger] logWithOwner:(_owner) \
-                                        level:(_level) \
-                                         file:[NSString stringWithUTF8String:__FILE__] \
-                                     function:[NSString stringWithUTF8String:__PRETTY_FUNCTION__] \
-                                         line:__LINE__ \
-                                       format:(_format), ##__VA_ARGS__];
-#else
-    #define XLogBase(owner, format...) do{}while(0)
-#endif
-
-// Anonymous build-in log
-#define XLog(format...)     XLogBase(nil, XInfoLevel, format)
-#define XWarning(format...) XLogBase(nil, XWarningLevel, format)
-#define XError(format...)   XLogBase(nil, XErrorLevel, format)
-
+/**
+ * @discussion Usage:`XLog(@"%P", CGPointZero)`
+ */
+@interface XLoggerCGPointFormatter : NSObject <XLoggerFormatter> @end
+/**
+ * @discussion Usage:`XLog(@"%S", CGSizeZero)`
+ */
+@interface XLoggerCGSizeFormatter : NSObject <XLoggerFormatter> @end
+/**
+ * @discussion Usage:`XLog(@"%R", CGRectZero)`
+ */
+@interface XLoggerCGRectFormatter : NSObject <XLoggerFormatter> @end
+/**
+ * @discussion Usage:`XLog(@"%SEL", @selector(...))`
+ */
+@interface XLoggerSelectorFormatter : NSObject <XLoggerFormatter> @end
 

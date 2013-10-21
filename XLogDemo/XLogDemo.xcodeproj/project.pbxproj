@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A3238F321812447000F9370C /* XLoggerBuildInFormatters.m in Sources */ = {isa = PBXBuildFile; fileRef = A3238F311812447000F9370C /* XLoggerBuildInFormatters.m */; };
 		A335A6C51811A08800530447 /* XLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = A335A6C31811A08800530447 /* XLogger.m */; };
 		A3797B8F181188530078C893 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3797B8E181188530078C893 /* Foundation.framework */; };
 		A3797B91181188530078C893 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3797B90181188530078C893 /* CoreGraphics.framework */; };
@@ -19,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A3238F301812447000F9370C /* XLoggerBuildInFormatters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLoggerBuildInFormatters.h; sourceTree = "<group>"; };
+		A3238F311812447000F9370C /* XLoggerBuildInFormatters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLoggerBuildInFormatters.m; sourceTree = "<group>"; };
 		A335A6C11811A08800530447 /* XLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLog.h; sourceTree = "<group>"; };
 		A335A6C21811A08800530447 /* XLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLogger.h; sourceTree = "<group>"; };
 		A335A6C31811A08800530447 /* XLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLogger.m; sourceTree = "<group>"; };
@@ -59,6 +62,8 @@
 				A335A6C21811A08800530447 /* XLogger.h */,
 				A335A6C31811A08800530447 /* XLogger.m */,
 				A335A6C41811A08800530447 /* XLoggerConfigurable.h */,
+				A3238F301812447000F9370C /* XLoggerBuildInFormatters.h */,
+				A3238F311812447000F9370C /* XLoggerBuildInFormatters.m */,
 			);
 			name = XLog;
 			path = ../../XLog;
@@ -191,6 +196,7 @@
 				A335A6C51811A08800530447 /* XLogger.m in Sources */,
 				A3797B9F181188530078C893 /* AppDelegate.m in Sources */,
 				A3797B9B181188530078C893 /* main.m in Sources */,
+				A3238F321812447000F9370C /* XLoggerBuildInFormatters.m in Sources */,
 				A3797BC9181188F30078C893 /* SNSLogging.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

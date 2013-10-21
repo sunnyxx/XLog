@@ -10,14 +10,12 @@
 
 @implementation SNSLoggingDelegate
 
-static SNSLoggingDelegate* singleton = nil;
 static NSDictionary* configDict = nil;
 
 + (void)load
 {
     // delegate
-    singleton = [self new];
-    [XLogger defaultLogger].delegate = singleton;
+    [XLogger defaultLogger].delegate = self;
     
     // plist
     NSString* path = [[NSBundle mainBundle] pathForResource:@"SNSLogging.plist" ofType:nil];
@@ -30,7 +28,7 @@ static NSDictionary* configDict = nil;
 
 #pragma mark - XLogger delegate
 
-- (BOOL)XLogger:(XLogger *)logger shouldShowOwner:(NSString *)owner level:(XLogLevel)level
++ (BOOL)XLogger:(XLogger *)logger shouldShowOwner:(NSString *)owner level:(XLogLevel)level
 {
     NSDictionary* showDict = configDict[@"Owner"];
     XLogLevel showBits = [showDict[owner] unsignedIntegerValue];
@@ -38,12 +36,12 @@ static NSDictionary* configDict = nil;
     return (showBits & level) || (allBits & level);
 }
 
-- (BOOL)XLogger:(XLogger *)logger shouldShowComponent:(NSString *)componentKey
++ (BOOL)XLogger:(XLogger *)logger shouldShowComponent:(NSString *)componentKey
 {
     return [configDict[@"Setting"][componentKey] boolValue];
 }
 
-- (NSString *)XLogger:(XLogger *)logger titleForLevel:(XLogLevel)level
++ (NSString *)XLogger:(XLogger *)logger titleForLevel:(XLogLevel)level
 {
     if (level & XInfoLevel)
     {
