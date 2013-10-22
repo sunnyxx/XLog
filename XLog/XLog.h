@@ -38,7 +38,7 @@
                                          file:[NSString stringWithUTF8String:__FILE__] \
                                      function:[NSString stringWithUTF8String:__PRETTY_FUNCTION__] \
                                          line:__LINE__ \
-                                       format:(_format), ##__VA_ARGS__];
+                                       format:(_format), ##__VA_ARGS__]
 #else
     #define XLogBase(owner, format...) do{}while(0)
 #endif
