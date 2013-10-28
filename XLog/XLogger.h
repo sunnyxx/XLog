@@ -62,6 +62,13 @@
 @property (nonatomic, weak) Class<XLoggerDelegate> delegate;
 
 /**
+ * Bits mask of current level
+ * @discussion This property is effective only if logger's delegate is not available.
+ * Usage:[[XLogger defaultLogger] setLevel:XWarningLevel | XErrorLevel];
+ */
+@property (nonatomic) XLogLevel level;
+
+/**
  * Register a formatter class that confirm <XLoggerFormatter> protocol to logger.
  *
  * @discussion As logger's delegate, use a class.

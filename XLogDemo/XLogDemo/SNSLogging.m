@@ -15,7 +15,7 @@ static NSDictionary* configDict = nil;
 + (void)load
 {
     // delegate
-    [XLogger defaultLogger].delegate = self;
+//    [XLogger defaultLogger].delegate = self;
     
     // plist
     NSString* path = [[NSBundle mainBundle] pathForResource:@"SNSLogging.plist" ofType:nil];

@@ -23,10 +23,6 @@
 	</dict>
 	<key>Owner</key>
 	<dict>
-		<key>---说明:bits</key>
-		<string>0(off)1(info)2(warning)4(error)</string>
-		<key>---说明:bits&amp;</key>
-		<string>info+warning+error=1+2+4=7</string>
 		<key>XLoggerOwnerKeyAll</key>
 		<integer>0</integer>
 		<key>Database</key>
@@ -35,22 +31,6 @@
 		<integer>4</integer>
 		<key>sy</key>
 		<integer>7</integer>
-		<key>cs</key>
-		<integer>0</integer>
-		<key>wyq</key>
-		<integer>0</integer>
-		<key>zzy</key>
-		<integer>0</integer>
-		<key>zh</key>
-		<integer>0</integer>
-		<key>tsc</key>
-		<integer>0</integer>
-		<key>lw</key>
-		<integer>0</integer>
-		<key>phm</key>
-		<integer>0</integer>
-		<key>wl</key>
-		<integer>0</integer>
 	</dict>
 </dict>
 </plist>

@@ -32,11 +32,11 @@
 //            SYLog(@"123:%d", 123);
 //        }];
 //        SYLog(@"%lf,%lf", NSLogTime, XLogTime);
-        CGRect rect = CGRectMake(0, 0, 100, 200);
-//        CGPoint point = rect.origin;
-        XLog(@"rect:%R,point:%P, size:%S", rect, rect.origin, rect.size);
-        XLog(@"selector:%@", NSStringFromSelector(_cmd));
-        XLog(@"selector:%S,%SEL",rect.size, _cmd);
+        CGRect rect = CGRectMake(1, 2, 3, 4);
+        XLog(@"rect:%R", rect);
+        XLog(@"point:%P", rect.origin);
+        XLog(@"size:%S", rect.size);
+        XLog(@"selector:%SEL", _cmd);
     }
     
     return YES;

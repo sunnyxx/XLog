@@ -35,6 +35,7 @@ typedef NS_OPTIONS(NSUInteger, XLogLevel)
     XInfoLevel     = 1 << 0, // 1(001)
     XWarningLevel  = 1 << 1, // 2(010)
     XErrorLevel    = 1 << 2, // 4(100)
+    XAllLevel      = XInfoLevel | XWarningLevel | XErrorLevel // 7(111)
 };
 
 typedef NSString* (^XFormatHandler)(void* argumennt);

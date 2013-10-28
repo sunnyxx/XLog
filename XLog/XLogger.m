@@ -56,6 +56,7 @@ static CFAbsoluteTime startTimeStamp = 0.0;
     dispatch_once(&onceToken, ^{
         
         singleton = [self new];
+        singleton.level = XAllLevel;
         
         // Build-in formatters
         [singleton registerFormatterClass:[XLoggerCGPointFormatter class]];
@@ -64,6 +65,7 @@ static CFAbsoluteTime startTimeStamp = 0.0;
         [singleton registerFormatterClass:[XLoggerSelectorFormatter class]];
         
     });
+    
     return singleton;
 }
 
@@ -76,6 +78,11 @@ static CFAbsoluteTime startTimeStamp = 0.0;
         {
             return;
         }
+    }
+    // If delegate is not available, use property 'level'
+    else if (!(self.level & level))
+    {
+        return;
     }
     
     NSMutableString* output = [NSMutableString string];
@@ -101,7 +108,7 @@ static CFAbsoluteTime startTimeStamp = 0.0;
         [output appendString:@"\n"];
     }
     
-    // Final print
+    // Finally print
     fprintf(stderr, "%s", [output UTF8String]);
 
 }
@@ -112,6 +119,7 @@ static CFAbsoluteTime startTimeStamp = 0.0;
     {
         self.formatterClasses = [NSMutableArray array];
     }
+    
     [self.formatterClasses addObject:formatterClass];
 }
 
@@ -192,6 +200,7 @@ static CFAbsoluteTime startTimeStamp = 0.0;
             return YES;
         }
     }
+    
     return NO;
 }
 
