@@ -81,3 +81,24 @@
     return NSStringFromSelector(va_arg(*ap, SEL));
 }
 @end
+
+//----------
+// View
+//----------
+@implementation XLoggerViewRecursiveFormatter
++ (NSString *)format { return @"%V"; }
++ (NSString *)formattedStringFromArgumentList:(va_list *)ap
+{
+    UIView *view = va_arg(*ap, UIView *);
+    SEL sel = NSSelectorFromString(@"recursiveDescription");
+    NSString *description = @"";
+    if ([view respondsToSelector:sel])
+    {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        description = [view performSelector:sel];
+#pragma clang diagnostic pop
+    }
+    return description;
+}
+@end

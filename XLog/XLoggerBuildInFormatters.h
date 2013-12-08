@@ -46,4 +46,8 @@
  * @discussion Usage:`XLog(@"%SEL", @selector(...))`
  */
 @interface XLoggerSelectorFormatter : NSObject <XLoggerFormatter> @end
+/**
+ * @discussion Usage:`XLog(@"%V", @selector(recursiveDescription))`
+ */
+@interface XLoggerViewRecursiveFormatter : NSObject <XLoggerFormatter> @end
 

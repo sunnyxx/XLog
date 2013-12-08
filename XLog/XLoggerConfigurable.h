@@ -38,7 +38,6 @@ typedef NS_OPTIONS(NSUInteger, XLogLevel)
     XAllLevel      = XInfoLevel | XWarningLevel | XErrorLevel // 7(111)
 };
 
-typedef NSString* (^XFormatHandler)(void* argumennt);
 @protocol XLoggerFormatter <NSObject>
 @required
 + (NSString *)format;

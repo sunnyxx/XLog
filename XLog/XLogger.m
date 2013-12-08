@@ -63,6 +63,7 @@ static CFAbsoluteTime startTimeStamp = 0.0;
         [singleton registerFormatterClass:[XLoggerCGSizeFormatter class]];
         [singleton registerFormatterClass:[XLoggerCGRectFormatter class]];
         [singleton registerFormatterClass:[XLoggerSelectorFormatter class]];
+        [singleton registerFormatterClass:[XLoggerViewRecursiveFormatter class]];
         
     });
     

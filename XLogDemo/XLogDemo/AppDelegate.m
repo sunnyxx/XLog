@@ -37,6 +37,10 @@
         XLog(@"point:%P", rect.origin);
         XLog(@"size:%S", rect.size);
         XLog(@"selector:%SEL", _cmd);
+        UIView *view1 = [UIView new];
+        UIView *view2 = [UIView new];
+        [view1 addSubview:view2];
+        XLog(@"view:%V,123123", view1);
     }
     
     return YES;
