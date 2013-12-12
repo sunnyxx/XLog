@@ -24,14 +24,25 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    UIViewController *rootVC = [[UIViewController alloc] init];
+    rootVC.view.backgroundColor = [UIColor grayColor];
+    [self.window addSubview:rootVC.view];
+    self.window.rootViewController = rootVC;
+    [self.window makeKeyAndVisible];
+    
+    [[XLogger defaultLogger] showUIConsoleAboveRootViewController:rootVC];
+    
     /* Tests here */ {
-//        NSTimeInterval NSLogTime = [self executeTimeOfBlock:^{
-//            NSLog(@"123:%d", 123);
-//        }];
-//        NSTimeInterval XLogTime = [self executeTimeOfBlock:^{
-//            SYLog(@"123:%d", 123);
-//        }];
-//        SYLog(@"%lf,%lf", NSLogTime, XLogTime);
+        //        NSTimeInterval NSLogTime = [self executeTimeOfBlock:^{
+        //            NSLog(@"123:%d", 123);
+        //        }];
+        //        NSTimeInterval XLogTime = [self executeTimeOfBlock:^{
+        //            SYLog(@"123:%d", 123);
+        //        }];
+        //        SYLog(@"%lf,%lf", NSLogTime, XLogTime);
         CGRect rect = CGRectMake(1, 2, 3, 4);
         XLog(@"rect:%R", rect);
         XLog(@"point:%P", rect.origin);

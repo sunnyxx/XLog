@@ -32,13 +32,13 @@
 
 @interface XLogger : NSObject
 /**
- * Get a default logger
+ * @brief Get a default logger
  * @return Singleton of XLogger
  */
 + (instancetype)defaultLogger;
 
 /**
- * This is where format and arguments parsed, assembled and printed.
+ * @brief This is where format and arguments parsed, assembled and printed.
  *
  * @param owner: A owner name of whom calls this log.
  * @param level: A bit mask stands for this log's level.
@@ -55,24 +55,31 @@
               format:(NSString *)format, ...;
 
 /**
- * Delegate for configuring.
+ * @brief Delegate for configuring.
  * @discussion As in general, logger's configuration will not be changed runtime, 
  *             so use a static class delegate will do.
  */
 @property (nonatomic, weak) Class<XLoggerDelegate> delegate;
 
 /**
- * Bits mask of current level
+ * @brief Bits mask of current level
  * @discussion This property is effective only if logger's delegate is not available.
  * Usage:[[XLogger defaultLogger] setLevel:XWarningLevel | XErrorLevel];
  */
 @property (nonatomic) XLogLevel level;
 
 /**
- * Register a formatter class that confirm <XLoggerFormatter> protocol to logger.
+ * @brief Register a formatter class that confirm <XLoggerFormatter> protocol to logger.
  *
  * @discussion As logger's delegate, use a class.
  */
 - (void)registerFormatterClass:(Class<XLoggerFormatter>)formatterClass;
+
+/**
+ *  @brief Show a logger view above the app.
+ *
+ *  @param rootViewController AppDelegate.window.rootViewController
+ */
+- (void)showUIConsoleAboveRootViewController:(UIViewController *)rootViewController;
 
 @end

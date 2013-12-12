@@ -30,6 +30,7 @@
 
 #import "XLogger.h"
 #import "XLoggerBuildInFormatters.h"
+#import "XLoggerViewController.h"
 
 @interface XLogger ()
 - (NSString *)prefixStringWithOwner:(NSString *)owner level:(XLogLevel)level file:(NSString *)file func:(NSString *)func line:(NSUInteger)line;
@@ -38,6 +39,10 @@
 @property (nonatomic, strong) NSMutableArray* formatterClasses;
 - (BOOL)containsCustomizedFormat:(NSString *)format;
 - (NSString *)customizedFormat:(NSString *)format arguments:(va_list)ap;
+
+// UI console
+@property (nonatomic, strong) XLoggerViewController *loggerViewController;
+
 @end
 
 static CFAbsoluteTime startTimeStamp = 0.0;
@@ -109,9 +114,15 @@ static CFAbsoluteTime startTimeStamp = 0.0;
         [output appendString:@"\n"];
     }
     
-    // Finally print
+    // Finally print to console
     fprintf(stderr, "%s", [output UTF8String]);
 
+    // print to UI console
+    if (self.loggerViewController)
+    {
+        [self.loggerViewController receiveLog:output];
+    }
+    
 }
 
 - (void)registerFormatterClass:(Class<XLoggerFormatter>)formatterClass
@@ -122,6 +133,12 @@ static CFAbsoluteTime startTimeStamp = 0.0;
     }
     
     [self.formatterClasses addObject:formatterClass];
+}
+
+- (void)showUIConsoleAboveRootViewController:(UIViewController *)rootViewController
+{
+    self.loggerViewController = [[XLoggerViewController alloc] initWithRootViewController:rootViewController];
+    [rootViewController.view addSubview:self.loggerViewController.view];
 }
 
 #pragma mark - Private
