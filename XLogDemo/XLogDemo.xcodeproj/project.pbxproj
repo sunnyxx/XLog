@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A3238F321812447000F9370C /* XLoggerBuildInFormatters.m in Sources */ = {isa = PBXBuildFile; fileRef = A3238F311812447000F9370C /* XLoggerBuildInFormatters.m */; };
-		A335A6C51811A08800530447 /* XLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = A335A6C31811A08800530447 /* XLogger.m */; };
 		A3797B8F181188530078C893 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3797B8E181188530078C893 /* Foundation.framework */; };
 		A3797B91181188530078C893 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3797B90181188530078C893 /* CoreGraphics.framework */; };
 		A3797B93181188530078C893 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3797B92181188530078C893 /* UIKit.framework */; };
@@ -17,16 +15,15 @@
 		A3797B9F181188530078C893 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A3797B9E181188530078C893 /* AppDelegate.m */; };
 		A3797BC9181188F30078C893 /* SNSLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = A3797BC7181188F30078C893 /* SNSLogging.m */; };
 		A3797BCA181188F30078C893 /* SNSLogging.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3797BC8181188F30078C893 /* SNSLogging.plist */; };
-		A448D5581859B3AB0099DCB6 /* XLoggerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A448D5571859B3AB0099DCB6 /* XLoggerViewController.m */; };
+		A461FB45185EB1F600231412 /* XLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = A461FB3C185EB1F600231412 /* XLogger.m */; };
+		A461FB46185EB1F600231412 /* XLoggerBuildInFormatters.m in Sources */ = {isa = PBXBuildFile; fileRef = A461FB3E185EB1F600231412 /* XLoggerBuildInFormatters.m */; };
+		A461FB47185EB1F600231412 /* XLoggerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A461FB43185EB1F600231412 /* XLoggerTableViewController.m */; };
+		A461FB4A185EB68100231412 /* XLogData.m in Sources */ = {isa = PBXBuildFile; fileRef = A461FB49185EB68100231412 /* XLogData.m */; };
+		A4CF878E18614E28001849EF /* XLoggerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4CF878D18614E28001849EF /* XLoggerTableViewCell.m */; };
+		A4CF879018614E73001849EF /* XLoggerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4CF878F18614E73001849EF /* XLoggerTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A3238F301812447000F9370C /* XLoggerBuildInFormatters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLoggerBuildInFormatters.h; sourceTree = "<group>"; };
-		A3238F311812447000F9370C /* XLoggerBuildInFormatters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLoggerBuildInFormatters.m; sourceTree = "<group>"; };
-		A335A6C11811A08800530447 /* XLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLog.h; sourceTree = "<group>"; };
-		A335A6C21811A08800530447 /* XLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLogger.h; sourceTree = "<group>"; };
-		A335A6C31811A08800530447 /* XLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLogger.m; sourceTree = "<group>"; };
-		A335A6C41811A08800530447 /* XLoggerConfigurable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLoggerConfigurable.h; sourceTree = "<group>"; };
 		A3797B8B181188530078C893 /* XLogDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XLogDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3797B8E181188530078C893 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A3797B90181188530078C893 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -40,8 +37,20 @@
 		A3797BC6181188F30078C893 /* SNSLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNSLogging.h; sourceTree = "<group>"; };
 		A3797BC7181188F30078C893 /* SNSLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNSLogging.m; sourceTree = "<group>"; };
 		A3797BC8181188F30078C893 /* SNSLogging.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SNSLogging.plist; sourceTree = "<group>"; };
-		A448D5561859B3AB0099DCB6 /* XLoggerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLoggerViewController.h; sourceTree = "<group>"; };
-		A448D5571859B3AB0099DCB6 /* XLoggerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLoggerViewController.m; sourceTree = "<group>"; };
+		A461FB3B185EB1F600231412 /* XLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLogger.h; sourceTree = "<group>"; };
+		A461FB3C185EB1F600231412 /* XLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLogger.m; sourceTree = "<group>"; };
+		A461FB3D185EB1F600231412 /* XLoggerBuildInFormatters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLoggerBuildInFormatters.h; sourceTree = "<group>"; };
+		A461FB3E185EB1F600231412 /* XLoggerBuildInFormatters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLoggerBuildInFormatters.m; sourceTree = "<group>"; };
+		A461FB3F185EB1F600231412 /* XLoggerConfigurable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLoggerConfigurable.h; sourceTree = "<group>"; };
+		A461FB40185EB1F600231412 /* XLogMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLogMacros.h; sourceTree = "<group>"; };
+		A461FB42185EB1F600231412 /* XLoggerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLoggerTableViewController.h; sourceTree = "<group>"; };
+		A461FB43185EB1F600231412 /* XLoggerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLoggerTableViewController.m; sourceTree = "<group>"; };
+		A461FB48185EB68100231412 /* XLogData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLogData.h; sourceTree = "<group>"; };
+		A461FB49185EB68100231412 /* XLogData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLogData.m; sourceTree = "<group>"; };
+		A461FB4B185EB68700231412 /* XLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLog.h; sourceTree = "<group>"; };
+		A4CF878C18614E28001849EF /* XLoggerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLoggerTableViewCell.h; sourceTree = "<group>"; };
+		A4CF878D18614E28001849EF /* XLoggerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLoggerTableViewCell.m; sourceTree = "<group>"; };
+		A4CF878F18614E73001849EF /* XLoggerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XLoggerTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,14 +70,9 @@
 		A335A6C01811A08800530447 /* XLog */ = {
 			isa = PBXGroup;
 			children = (
-				A335A6C11811A08800530447 /* XLog.h */,
-				A335A6C21811A08800530447 /* XLogger.h */,
-				A335A6C31811A08800530447 /* XLogger.m */,
-				A448D5561859B3AB0099DCB6 /* XLoggerViewController.h */,
-				A448D5571859B3AB0099DCB6 /* XLoggerViewController.m */,
-				A335A6C41811A08800530447 /* XLoggerConfigurable.h */,
-				A3238F301812447000F9370C /* XLoggerBuildInFormatters.h */,
-				A3238F311812447000F9370C /* XLoggerBuildInFormatters.m */,
+				A461FB4B185EB68700231412 /* XLog.h */,
+				A461FB38185EB1F600231412 /* Core */,
+				A461FB41185EB1F600231412 /* UI */,
 			);
 			name = XLog;
 			path = ../../XLog;
@@ -134,6 +138,33 @@
 			name = "Using XLog In Specific Proj";
 			sourceTree = "<group>";
 		};
+		A461FB38185EB1F600231412 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				A461FB48185EB68100231412 /* XLogData.h */,
+				A461FB49185EB68100231412 /* XLogData.m */,
+				A461FB3B185EB1F600231412 /* XLogger.h */,
+				A461FB3C185EB1F600231412 /* XLogger.m */,
+				A461FB3D185EB1F600231412 /* XLoggerBuildInFormatters.h */,
+				A461FB3E185EB1F600231412 /* XLoggerBuildInFormatters.m */,
+				A461FB3F185EB1F600231412 /* XLoggerConfigurable.h */,
+				A461FB40185EB1F600231412 /* XLogMacros.h */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		A461FB41185EB1F600231412 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				A461FB42185EB1F600231412 /* XLoggerTableViewController.h */,
+				A461FB43185EB1F600231412 /* XLoggerTableViewController.m */,
+				A4CF878C18614E28001849EF /* XLoggerTableViewCell.h */,
+				A4CF878D18614E28001849EF /* XLoggerTableViewCell.m */,
+				A4CF878F18614E73001849EF /* XLoggerTableViewCell.xib */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -187,6 +218,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3797B99181188530078C893 /* InfoPlist.strings in Resources */,
+				A4CF879018614E73001849EF /* XLoggerTableViewCell.xib in Resources */,
 				A3797BCA181188F30078C893 /* SNSLogging.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -198,12 +230,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A335A6C51811A08800530447 /* XLogger.m in Sources */,
+				A461FB47185EB1F600231412 /* XLoggerTableViewController.m in Sources */,
 				A3797B9F181188530078C893 /* AppDelegate.m in Sources */,
+				A461FB46185EB1F600231412 /* XLoggerBuildInFormatters.m in Sources */,
+				A461FB4A185EB68100231412 /* XLogData.m in Sources */,
+				A4CF878E18614E28001849EF /* XLoggerTableViewCell.m in Sources */,
 				A3797B9B181188530078C893 /* main.m in Sources */,
-				A3238F321812447000F9370C /* XLoggerBuildInFormatters.m in Sources */,
+				A461FB45185EB1F600231412 /* XLogger.m in Sources */,
 				A3797BC9181188F30078C893 /* SNSLogging.m in Sources */,
-				A448D5581859B3AB0099DCB6 /* XLoggerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

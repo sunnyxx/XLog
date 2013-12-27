@@ -46,8 +46,8 @@
         CGRect rect = CGRectMake(1, 2, 3, 4);
         XLog(@"rect:%R", rect);
         XLog(@"point:%P", rect.origin);
-        XLog(@"size:%S", rect.size);
-        XLog(@"selector:%SEL", _cmd);
+        XWarning(@"size:%S", rect.size);
+        XError(@"selector:%SEL", _cmd);
         UIView *view1 = [UIView new];
         UIView *view2 = [UIView new];
         [view1 addSubview:view2];

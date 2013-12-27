@@ -30,6 +30,8 @@
 
 #import "XLoggerConfigurable.h"
 
+@class XLogData;
+
 @interface XLogger : NSObject
 /**
  * @brief Get a default logger
@@ -66,7 +68,7 @@
  * @discussion This property is effective only if logger's delegate is not available.
  * Usage:[[XLogger defaultLogger] setLevel:XWarningLevel | XErrorLevel];
  */
-@property (nonatomic) XLogLevel level;
+@property (nonatomic) XLogLevel displayLevelMask;
 
 /**
  * @brief Register a formatter class that confirm <XLoggerFormatter> protocol to logger.

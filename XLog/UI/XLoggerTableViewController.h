@@ -1,8 +1,8 @@
 //
-//  XLog.h
+//  XLogger.m
 //  XLog
 //
-//  Created by Sunny Sun on 18/10/13.
+//  Created by Sunny Sun on 12/12/13.
 //  Copyright (c) 2013 Sunny Sun. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
@@ -28,5 +28,11 @@
 //  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "XLogMacros.h"
-#import "XLogData.h"
+#import <UIKit/UIKit.h>
+
+@class XLogData;
+@interface XLoggerTableViewController : UITableViewController
+
+- (instancetype)initWithRootViewController:(UIViewController *)rootViewController;
+- (void)receiveLogData:(XLogData *)data;
+@end

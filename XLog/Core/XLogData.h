@@ -1,8 +1,8 @@
 //
-//  XLog.h
+//  XLogData.h
 //  XLog
 //
-//  Created by Sunny Sun on 18/10/13.
+//  Created by Sunny Sun on 16/12/13.
 //  Copyright (c) 2013 Sunny Sun. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
@@ -28,5 +28,18 @@
 //  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "XLogMacros.h"
-#import "XLogData.h"
+#import "XLoggerConfigurable.h"
+
+@interface XLogData : NSObject
+
+@property (nonatomic, copy) NSString *owner;
+@property (nonatomic, copy) NSString *file;
+@property (nonatomic) NSInteger line;
+@property (nonatomic) NSString *function;
+@property (nonatomic) XLogLevel level;
+@property (nonatomic) NSTimeInterval time;
+@property (nonatomic, copy) NSString *text;
+
+@property (nonatomic, copy) NSString *output;
+
+@end

@@ -28,15 +28,20 @@
 //  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "XLoggerViewController.h"
+#import "XLoggerTableViewController.h"
+#import "XLoggerTableViewCell.h"
+#import "XLogData.h"
 
-@interface XLoggerViewController ()
+@interface XLoggerTableViewController ()
 @property (nonatomic, weak) UIViewController *rootViewController;
 @property (nonatomic, strong) NSMutableArray *logs;
-@property (nonatomic, strong) UILabel *previewLabel;
+@property (nonatomic) BOOL hasLogTableViewShowed;
+@property (nonatomic, strong) UIFont *logTextFont;
 @end
 
-@implementation XLoggerViewController
+NSString *const CellID = @"XLoggerTableViewCell";
+
+@implementation XLoggerTableViewController
 
 - (id)initWithRootViewController:(UIViewController *)rootViewController
 {
@@ -49,20 +54,24 @@
     return self;
 }
 
-- (void)receiveLog:(NSString *)msg
+- (void)receiveLogData:(XLogData *)data
 {
-    self.previewLabel.text = msg;
-    [self.logs addObject:msg];
+    [self.logs addObject:data];
+    [self.tableView reloadData];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.tableView.rowHeight = 25.0f;
+//    self.tableView.rowHeight = 25.0f;
 //    self.tableView = [[UITableView alloc] initWithFrame:self.rootViewController.view.bounds];
 //    
 //    [self.rootViewController.view addSubview:self.tableView];
+    
+    self.logTextFont = [UIFont systemFontOfSize:10.0f];
+    self.tableView.tableFooterView = [UIView new];
+    [self.tableView registerNib:[UINib nibWithNibName:@"XLoggerTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:CellID];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -79,23 +88,14 @@
     
     self.view.frame = CGRectOffset(self.view.frame, 0, -CGRectGetHeight(self.view.frame));
     
-    UIView *previewView = [[UIView alloc] initWithFrame:CGRectMake(0, 20.0f, CGRectGetWidth(self.rootViewController.view.bounds), 30.0f)];
-    previewView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.5f];
-    [self.rootViewController.view addSubview:previewView];
-    [self.rootViewController.view bringSubviewToFront:previewView];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
-    [previewView addGestureRecognizer:tap];
-    
-    self.previewLabel = [[UILabel alloc] initWithFrame:previewView.bounds];
-    self.previewLabel.text = [self.logs firstObject] ?: @"";
-    [previewView addSubview:self.previewLabel];
-    
-    UIWindow *topWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    UIWindow *topWindow = [[UIWindow alloc] initWithFrame:CGRectMake(10, 10, 20, 20)];
     topWindow.backgroundColor = [UIColor greenColor];
-    topWindow.windowLevel = UIWindowLevelStatusBar;
+    topWindow.windowLevel = UIWindowLevelStatusBar + 1;
 //    [topWindow makeKeyAndVisible];
     topWindow.hidden = NO;
     [self.view.window addSubview:topWindow];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+    [topWindow addGestureRecognizer:tap];
     
     UIView *view = [[UIView alloc] initWithFrame:topWindow.bounds];
     view.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:0.5f];
@@ -106,8 +106,10 @@
 {
     if (recognizer.state == UIGestureRecognizerStateEnded)
     {
+        CGFloat offset = self.hasLogTableViewShowed ? -CGRectGetHeight(self.view.frame) : CGRectGetHeight(self.view.frame);
         [UIView animateWithDuration:0.5f animations:^{
-            self.view.frame = CGRectOffset(self.view.frame, 0, CGRectGetHeight(self.view.frame));
+            self.view.frame = CGRectOffset(self.view.frame, 0, offset);
+            self.hasLogTableViewShowed = !self.hasLogTableViewShowed;
         }];
     }
 }
@@ -124,23 +126,18 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *const cellID = @"logCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    if (!cell)
-    {
-        // TODO: 可以给cell一个结构化log对象进行显示
-        
-        
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
-        cell.textLabel.minimumScaleFactor = 0.5f;
-        NSString *log = self.logs[indexPath.row];
-        cell.textLabel.font = [UIFont systemFontOfSize:8.0f];
-        cell.detailTextLabel.font = [UIFont systemFontOfSize:8.0f];
+    XLoggerTableViewCell *cell = (XLoggerTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellID forIndexPath:indexPath];
+    [cell setLogData:self.logs[indexPath.row]];
 
-        cell.textLabel.text = @"11111111111111111111";
-        cell.detailTextLabel.text = log;
-    }
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    XLogData *logData = self.logs[indexPath.row];
+    CGSize titleSize = [logData.file sizeWithFont:self.logTextFont constrainedToSize:CGSizeMake(320.0f, INT_MAX)];
+    CGSize textSize = [logData.output sizeWithFont:self.logTextFont constrainedToSize:CGSizeMake(320.0f, INT_MAX)];
+    return titleSize.height + textSize.height + 5.0f /* reserved */;
 }
 
 @end

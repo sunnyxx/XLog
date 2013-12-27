@@ -39,6 +39,18 @@
 #import "XLogger.h"
 
 //----------
+// BOOL
+//----------
+@implementation XLoggerBOOLFormatter
++ (NSString *)format { return @"%B"; }
++ (NSString *)formattedStringFromArgumentList:(va_list *)ap
+{
+    BOOL yesOrNo = va_arg(*ap, int);
+    return yesOrNo ? @"YES" : @"NO";
+}
+@end
+
+//----------
 // CGPoint
 //----------
 @implementation XLoggerCGPointFormatter
@@ -82,9 +94,9 @@
 }
 @end
 
-//----------
-// View
-//----------
+//------------
+// View debug
+//------------
 @implementation XLoggerViewRecursiveFormatter
 + (NSString *)format { return @"%V"; }
 + (NSString *)formattedStringFromArgumentList:(va_list *)ap

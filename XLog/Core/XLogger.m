@@ -30,7 +30,8 @@
 
 #import "XLogger.h"
 #import "XLoggerBuildInFormatters.h"
-#import "XLoggerViewController.h"
+#import "XLoggerTableViewController.h"
+#import "XLogData.h"
 
 @interface XLogger ()
 - (NSString *)prefixStringWithOwner:(NSString *)owner level:(XLogLevel)level file:(NSString *)file func:(NSString *)func line:(NSUInteger)line;
@@ -40,8 +41,11 @@
 - (BOOL)containsCustomizedFormat:(NSString *)format;
 - (NSString *)customizedFormat:(NSString *)format arguments:(va_list)ap;
 
+// Structure logging
+- (void)logData:(XLogData *)logData;
+
 // UI console
-@property (nonatomic, strong) XLoggerViewController *loggerViewController;
+@property (nonatomic, strong) XLoggerTableViewController *loggerViewController;
 
 @end
 
@@ -61,7 +65,7 @@ static CFAbsoluteTime startTimeStamp = 0.0;
     dispatch_once(&onceToken, ^{
         
         singleton = [self new];
-        singleton.level = XAllLevel;
+        singleton.displayLevelMask = XAllLevel;
         
         // Build-in formatters
         [singleton registerFormatterClass:[XLoggerCGPointFormatter class]];
@@ -86,7 +90,7 @@ static CFAbsoluteTime startTimeStamp = 0.0;
         }
     }
     // If delegate is not available, use property 'level'
-    else if (!(self.level & level))
+    else if (!(self.displayLevelMask & level))
     {
         return;
     }
@@ -113,16 +117,29 @@ static CFAbsoluteTime startTimeStamp = 0.0;
     {
         [output appendString:@"\n"];
     }
-    
-    // Finally print to console
-    fprintf(stderr, "%s", [output UTF8String]);
 
+    // Assemble to XLogData obj
+    XLogData *data = [XLogData new];
+    data.owner = owner;
+    data.level = level;
+    data.file = file;
+    data.function = function;
+    data.line = line;
+    data.time = CFAbsoluteTimeGetCurrent() - startTimeStamp;
+    data.output = output;
+    [self logData:data];
+}
+
+- (void)logData:(XLogData *)data
+{
+    // Finally print to console
+    fprintf(stderr, "%s", [data.output UTF8String]);
+    
     // print to UI console
     if (self.loggerViewController)
     {
-        [self.loggerViewController receiveLog:output];
+        [self.loggerViewController receiveLogData:data];
     }
-    
 }
 
 - (void)registerFormatterClass:(Class<XLoggerFormatter>)formatterClass
@@ -137,7 +154,7 @@ static CFAbsoluteTime startTimeStamp = 0.0;
 
 - (void)showUIConsoleAboveRootViewController:(UIViewController *)rootViewController
 {
-    self.loggerViewController = [[XLoggerViewController alloc] initWithRootViewController:rootViewController];
+    self.loggerViewController = [[XLoggerTableViewController alloc] initWithRootViewController:rootViewController];
     [rootViewController.view addSubview:self.loggerViewController.view];
 }
 
