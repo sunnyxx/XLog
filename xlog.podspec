@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.summary  = "A lightweight iOS customizable logger"
   s.homepage = 'https://github.com/sunnyxx/XLog'
   s.author = { 'sunnyxx' => 'sunnyxx.github.io' }
-  s.source = { :git => 'https://github.com/sunnyxx/XLog.git'}
-  s.source_files = 'XLog/*.{h,m}','XLog/Core/*.{h,m}','XLog/UI/*.*'
+  s.source = { :git => 'https://github.com/sunnyxx/XLog.git', :commit => 'a37290037d42ff0178ea8c6018c2cc3aeef42217'}
+  s.source_files = 'XLog/*.{h,m}'
   s.requires_arc = true
 end
