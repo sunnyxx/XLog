@@ -30,7 +30,6 @@
 
 #import "XLogger.h"
 #import "XLoggerBuildInFormatters.h"
-#import "XLoggerTableViewController.h"
 #import "XLogData.h"
 
 @interface XLogger ()
@@ -43,9 +42,6 @@
 
 // Structure logging
 - (void)logData:(XLogData *)logData;
-
-// UI console
-@property (nonatomic, strong) XLoggerTableViewController *loggerViewController;
 
 @end
 
@@ -134,12 +130,6 @@ static CFAbsoluteTime startTimeStamp = 0.0;
 {
     // Finally print to console
     fprintf(stderr, "%s", [data.output UTF8String]);
-    
-    // print to UI console
-    if (self.loggerViewController)
-    {
-        [self.loggerViewController receiveLogData:data];
-    }
 }
 
 - (void)registerFormatterClass:(Class<XLoggerFormatter>)formatterClass
@@ -150,12 +140,6 @@ static CFAbsoluteTime startTimeStamp = 0.0;
     }
     
     [self.formatterClasses addObject:formatterClass];
-}
-
-- (void)showUIConsoleAboveRootViewController:(UIViewController *)rootViewController
-{
-    self.loggerViewController = [[XLoggerTableViewController alloc] initWithRootViewController:rootViewController];
-    [rootViewController.view addSubview:self.loggerViewController.view];
 }
 
 #pragma mark - Private

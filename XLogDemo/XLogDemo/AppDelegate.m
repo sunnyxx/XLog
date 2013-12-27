@@ -32,9 +32,7 @@
     [self.window addSubview:rootVC.view];
     self.window.rootViewController = rootVC;
     [self.window makeKeyAndVisible];
-    
-    [[XLogger defaultLogger] showUIConsoleAboveRootViewController:rootVC];
-    
+        
     /* Tests here */ {
         //        NSTimeInterval NSLogTime = [self executeTimeOfBlock:^{
         //            NSLog(@"123:%d", 123);

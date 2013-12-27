@@ -77,11 +77,4 @@
  */
 - (void)registerFormatterClass:(Class<XLoggerFormatter>)formatterClass;
 
-/**
- *  @brief Show a logger view above the app.
- *
- *  @param rootViewController AppDelegate.window.rootViewController
- */
-- (void)showUIConsoleAboveRootViewController:(UIViewController *)rootViewController;
-
 @end
