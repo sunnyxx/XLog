@@ -31,6 +31,10 @@
 #import "XLoggerConfigurable.h"
 
 /**
+ * @discussion Usage:`XLog(@"%B", yes or no)`
+ */
+@interface XLoggerBOOLFormatter : NSObject <XLoggerFormatter> @end
+/**
  * @discussion Usage:`XLog(@"%P", CGPointZero)`
  */
 @interface XLoggerCGPointFormatter : NSObject <XLoggerFormatter> @end
