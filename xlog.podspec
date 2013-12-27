@@ -7,6 +7,6 @@ Pod::Spec.new do |s|
   s.homepage = 'https://github.com/sunnyxx/XLog'
   s.author = { 'sunnyxx' => 'sunnyxx.github.io' }
   s.source = { :git => 'https://github.com/sunnyxx/XLog.git'}
-  s.source_files = 'XLog/*.{h,m}', 'XLog/**/*.*',
+  s.source_files = 'XLog/*.{h,m}', 'XLog/Core/*.*'
   s.requires_arc = true
 end
